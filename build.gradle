@@ -15,6 +15,8 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+apply plugin: "jacoco"
 
 jar {
 	baseName = 'subtitle-converter'
@@ -46,4 +48,30 @@ eclipse {
 
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.9'
+}
+
+jacocoTestReport {
+	group = "Reporting"
+	afterEvaluate {
+		classDirectories = files(classDirectories.files.collect {
+			fileTree(dir: 'build/classes/main',
+					exclude: 'com/dotsub/vtms/web/mapper/**')
+		})
+	}
+	reports {
+		xml.enabled true
+		csv.enabled false
+		html.destination "${buildDir}/reports/coverage"
+	}
+}
+
+findbugs {
+	effort = "max"
+	reportLevel = "medium"
+}
+
+tasks.withType(FindBugs) {
+	reports {
+		xml.enabled = true
+	}
 }
