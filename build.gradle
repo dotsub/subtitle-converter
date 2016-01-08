@@ -16,7 +16,7 @@ apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
-apply plugin: "jacoco"
+apply plugin: 'jacoco'
 
 jar {
 	baseName = 'subtitle-converter'
@@ -35,7 +35,8 @@ checkstyle {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter')
-	testCompile('org.springframework.boot:spring-boot-starter-test') 
+	compile('commons-io:commons-io:2.4')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
 

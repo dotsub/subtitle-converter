@@ -1,0 +1,460 @@
+1
+00:00:00,000 --> 00:00:02,832
+[Brooks]
+Dotsub's number one mission is to ensure
+
+2
+00:00:02,832 --> 00:00:05,960
+that video can be communicated
+to as many people as possible in the world.
+
+3
+00:00:05,960 --> 00:00:09,867
+[dotsub™]
+[Any Video Any Language]
+
+4
+00:00:09,867 --> 00:00:12,375
+[Michael]
+Seventy-five percent of the world
+
+5
+00:00:12,375 --> 00:00:17,197
+doesn't speak any English at all,
+and people emotionally connect with,
+
+6
+00:00:17,197 --> 00:00:20,912
+engage with,
+enjoy stories and communication
+
+7
+00:00:20,912 --> 00:00:23,041
+in their own language.
+>> [David] We are
+
+8
+00:00:23,041 --> 00:00:26,872
+an online video captioning
+and translation platform.
+
+9
+00:00:26,872 --> 00:00:29,194
+[Michael]
+We received a patent for the process
+
+10
+00:00:29,194 --> 00:00:32,259
+of a browser-based
+or cloud-based tool
+
+11
+00:00:32,259 --> 00:00:35,626
+to enable time coding to be done
+by a browser
+
+12
+00:00:35,626 --> 00:00:41,400
+in a collaborative way, and then subtitling
+and captioning be done from a browser.
+
+13
+00:00:41,400 --> 00:00:43,673
+We created something
+called the VLMS,
+
+14
+00:00:43,673 --> 00:00:46,111
+the Video Language Management System.
+
+15
+00:00:46,111 --> 00:00:48,177
+[Brooks]
+Dotsub's Video Language Management System
+
+16
+00:00:48,177 --> 00:00:52,569
+is a proprietary system
+for tracking and reviewing
+
+17
+00:00:52,569 --> 00:00:55,301
+and assigning your translation work,
+where it empowers
+
+18
+00:00:55,301 --> 00:00:58,180
+our enterprise users
+to have complex workflows
+
+19
+00:00:58,180 --> 00:01:01,196
+that meet their business needs.
+>> [Michael] The first thing that we do
+
+20
+00:01:01,196 --> 00:01:05,095
+is create a time coded caption
+in the source language of the video,
+
+21
+00:01:05,095 --> 00:01:09,600
+and then enable that
+to be edited or reviewed collaboratively
+
+22
+00:01:09,600 --> 00:01:12,456
+by anyone in the world
+with granular permissioning
+
+23
+00:01:12,456 --> 00:01:15,010
+down to the caption level.
+
+24
+00:01:15,010 --> 00:01:18,075
+[David]
+We allow any video to be indexed,
+
+25
+00:01:18,075 --> 00:01:22,254
+understood, to be accessible,
+and to be, really, more engaging
+
+26
+00:01:22,254 --> 00:01:24,484
+for anybody around the world.
+
+27
+00:01:24,484 --> 00:01:26,173
+[Dave]
+Having a translation—either a caption
+
+28
+00:01:26,173 --> 00:01:31,606
+or a voiceover—
+is a significantly more efficient way
+
+29
+00:01:31,606 --> 00:01:33,696
+of getting that message across,
+
+30
+00:01:33,696 --> 00:01:36,296
+and a much more emotionally inclusive way—
+
+31
+00:01:36,296 --> 00:01:39,199
+a much better way
+of communicating
+
+32
+00:01:39,199 --> 00:01:41,335
+with the people around the world.
+
+33
+00:01:41,335 --> 00:01:43,494
+[Peter]
+Most of Dotsub's customers
+
+34
+00:01:43,494 --> 00:01:46,137
+come to us
+with a specific need.
+
+35
+00:01:46,137 --> 00:01:50,712
+They're trying to use their video assets
+in ways to reach new markets,
+
+36
+00:01:50,712 --> 00:01:53,010
+new audiences,
+make it more useful,
+
+37
+00:01:53,010 --> 00:01:56,029
+repurpose it, have it go further,
+have it touch more people.
+
+38
+00:01:56,029 --> 00:01:58,676
+[Dave]
+We can provide the, A) the knowledge
+
+39
+00:01:58,676 --> 00:02:00,881
+and B) the technology
+to do it.
+
+40
+00:02:00,881 --> 00:02:04,388
+The way we work is very much
+like like a concierge service.
+
+41
+00:02:04,388 --> 00:02:07,569
+It never ceases to amaze me
+the amount of work
+
+42
+00:02:07,569 --> 00:02:10,955
+what people within Dotsub will go to
+to make sure that a customer
+
+43
+00:02:10,955 --> 00:02:13,022
+gets their work done properly.
+
+44
+00:02:13,022 --> 00:02:15,134
+[Brooks]
+Yeah, and making sure the platform's robust enough.
+
+45
+00:02:15,134 --> 00:02:18,312
+We have two nines uptimes—
+it's something we're very proud of,
+
+46
+00:02:18,312 --> 00:02:21,161
+that we're able to offer such a product
+to our end users
+
+47
+00:02:21,161 --> 00:02:24,992
+at such high availability.
+>> [Clara] The idea that you can integrate
+
+48
+00:02:24,992 --> 00:02:27,774
+your existing account
+on an OVP with Dotsub
+
+49
+00:02:27,774 --> 00:02:30,607
+means that you do not need
+to manage files.
+
+50
+00:02:30,607 --> 00:02:33,115
+The video that is already
+on an online video platform,
+
+51
+00:02:33,115 --> 00:02:37,039
+what you do is you tag it,
+we bring it to Dotsub
+
+52
+00:02:37,039 --> 00:02:40,402
+without you having to do
+anything else.
+
+53
+00:02:40,402 --> 00:02:43,513
+Captions are done at Dotsub.
+Translations are done at Dotsub.
+
+54
+00:02:43,513 --> 00:02:47,251
+When they are published,
+they are sent back to the OVP.
+
+55
+00:02:47,251 --> 00:02:50,940
+So if the video living in the OVP
+is already on a website,
+
+56
+00:02:50,940 --> 00:02:54,841
+captions will go there live.
+>> [Brooks] We can actually seamlessly bring
+
+57
+00:02:54,841 --> 00:02:57,024
+in your video content,
+automatically caption it,
+
+58
+00:02:57,024 --> 00:02:59,946
+translate it to all your target languages,
+upload the result
+
+59
+00:02:59,946 --> 00:03:02,825
+back to your OVP
+without a single touch.
+
+60
+00:03:02,825 --> 00:03:06,656
+I think that's the greatest value added.
+>> [Peter] The final review stop
+
+61
+00:03:06,656 --> 00:03:09,953
+gives people the assurance
+that the quality that they want
+
+62
+00:03:09,953 --> 00:03:12,832
+is under their control
+and will be delivered on time.
+
+63
+00:03:12,832 --> 00:03:14,832
+[Clara]
+We want to connect people
+
+64
+00:03:14,832 --> 00:03:16,832
+from different parts of the world.
+
+65
+00:03:16,832 --> 00:03:18,832
+We give people the tools
+to do what they do best.
+
+66
+00:03:18,832 --> 00:03:20,998
+[Brooks]
+Scalability—always looking
+
+67
+00:03:20,998 --> 00:03:23,970
+to serve not just one user
+but a million users.
+
+68
+00:03:23,970 --> 00:03:27,515
+[Peter] Our biggest customers—
+ten out of the Fortune 50 companies
+
+69
+00:03:27,515 --> 00:03:32,809
+that we work with on a regular basis—
+what they're looking for is ease,
+
+70
+00:03:32,809 --> 00:03:35,828
+speed, and quality
+that they can rely on.
+
+71
+00:03:35,828 --> 00:03:39,287
+[Clara] You can control when things go live
+by publishing them.
+
+72
+00:03:39,287 --> 00:03:41,795
+When they get published here,
+they appear there.
+
+73
+00:03:41,795 --> 00:03:44,117
+It saves a lot of time
+and saves a lot of money.
+
+74
+00:03:44,117 --> 00:03:46,404
+[Brooks] Ensuring we're future proof
+to the next level.
+
+75
+00:03:46,404 --> 00:03:50,163
+Thirty-five, 40% of our users lately
+turning towards mobile.
+
+76
+00:03:50,163 --> 00:03:53,135
+[Clara] We have captioners and translators
+all over the world.
+
+77
+00:03:53,135 --> 00:03:56,659
+[Brooks] Taking pride
+in the product that we deliver to the end user.
+
+78
+00:03:56,659 --> 00:03:58,725
+[Dave]
+It's a very nice feeling to be a member
+
+79
+00:03:58,725 --> 00:04:04,321
+of a club that feels so passionately
+about the things that you feel passionately about.
+
+80
+00:04:04,321 --> 00:04:08,384
+You find yourself in a group of people
+who are passionate
+
+81
+00:04:08,384 --> 00:04:12,239
+about doing a good job.
+>> [Clara] I have the most amazing team
+
+82
+00:04:12,239 --> 00:04:14,239
+of project managers.
+
+83
+00:04:14,239 --> 00:04:17,161
+[dotsub™]
+[Any Video Any Language]
+
+84
+00:04:17,161 --> 00:04:19,344
+[Clara]
+I had no idea this was even possible.
+
+85
+00:04:19,344 --> 00:04:23,268
+It's wonderful, really.
+>> [Peter] It is fantastic.
+
+86
+00:04:23,268 --> 00:04:26,284
+>> [Clara] [laughing]
+>> [Dave] [laughing]
+
+87
+00:04:26,284 --> 00:04:28,975
+>> [Peter] [laughing]
+>> [Brooks] [laughing]
+
+88
+00:04:28,975 --> 00:04:31,483
+>> [David Thank you very much.
+>> [Michael] So why don't we start this again?
+
+89
+00:04:31,483 --> 00:04:33,483
+[Dotsub]
+[In order of appearance:]
+
+90
+00:04:33,483 --> 00:04:35,483
+[Brooks Lyrette] [Michael Smolens]
+[David Orban] [Dave Bryant]
+
+91
+00:04:35,483 --> 00:04:37,483
+[Peter Crosby] [Clara Garcia]
+[Directed, edited and produced by David Orban]
+
+92
+00:04:37,483 --> 00:04:39,483
+[Music]
+["Adventures of the Deaf Dreamer"]
+
+93
+00:04:39,483 --> 00:04:41,483
+["Cherry"] [licensed under Creative Commons Attribution
+by Josh Woodward]
+
+94
+00:04:41,483 --> 00:04:43,483
+[Copyright © 2015 Dotsub]
+[dotsub.com]
