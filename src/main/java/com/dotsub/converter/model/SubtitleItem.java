@@ -4,7 +4,6 @@ import java.util.Objects;
 
 /**
  * Represents a single line item from a caption or subtitle file.
- *
  * Created by: Brooks Lyrette
  * For: Dotsub LLC.
  * Date: 16-01-08.
@@ -53,13 +52,17 @@ public class SubtitleItem {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SubtitleItem that = (SubtitleItem) o;
-        return Objects.equals(startTime, that.startTime) &&
-                Objects.equals(duration, that.duration) &&
-                Objects.equals(content, that.content);
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        SubtitleItem that = (SubtitleItem) obj;
+        return Objects.equals(startTime, that.startTime)
+                && Objects.equals(duration, that.duration)
+                && Objects.equals(content, that.content);
     }
 
     @Override

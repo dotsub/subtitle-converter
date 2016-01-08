@@ -22,17 +22,15 @@ import static java.lang.String.format;
 
 /**
  * The srt format is as follows
- * 1 (the id)
- * startTime --> EndTime
- * content
- *
- * 2 (the next id)
- * startTime --> EndTime
- * content
- *
- * The next id means the content has concluded
- *
- *
+
+ 1 (the id)
+ startTime --> EndTime
+ contenr
+ 2 (the next id)
+ startTime --> EndTime
+ content
+
+ * The next id means the content has concluded.
  * Created by: Brooks Lyrette
  * For: Dotsub LLC.
  * Date: 16-01-08.
@@ -41,7 +39,8 @@ import static java.lang.String.format;
 public class SrtImportHandler implements SubtitleImportHandler {
 
     private static final Log log = LogFactory.getLog(SrtImportHandler.class);
-    private static final Pattern pattern = Pattern.compile(".*(\\d+):(\\d+):(\\d+),(\\d+).*-->.*(\\d+):(\\d+):(\\d+),(\\d+).*");
+    private static final Pattern pattern =
+            Pattern.compile(".*(\\d+):(\\d+):(\\d+),(\\d+).*-->.*(\\d+):(\\d+):(\\d+),(\\d+).*");
 
     @Override
     public List<SubtitleItem> importFile(InputStream inputStream) {
@@ -51,7 +50,7 @@ public class SrtImportHandler implements SubtitleImportHandler {
 
             List<SubtitleItem> items = new ArrayList<>();
             int lineNumber = 0;
-            Boolean isPAL = null;
+            Boolean isPal = null;
             int palOffset = 0;
 
             while (lines.hasNext()) {
@@ -72,9 +71,9 @@ public class SrtImportHandler implements SubtitleImportHandler {
                         throw new FileImportException("File does not match expected srt format");
                     }
                 }
-                if(isPAL == null) {
+                if (isPal == null) {
                     palOffset = Integer.parseInt(matcher.group(1)) * 3600000;
-                    isPAL = palOffset > 0;
+                    isPal = palOffset > 0;
                 }
 
                 int start = 0;
@@ -100,7 +99,9 @@ public class SrtImportHandler implements SubtitleImportHandler {
                 }
                 lineNumber++;
                 if (log.isDebugEnabled()) {
-                    log.debug(format("Creating a new subtitle from: \n\t times:%d ms to %d ms  \n\t content: %s \n\t", start, duration, caption.toString()));
+                    log.debug(
+                            format("Creating a new subtitle from:\t times:%d ms to %d ms  \t content: %s\t",
+                                    start, duration, caption.toString()));
                 }
                 SubtitleItem item = new SubtitleItem(start, duration, caption.toString());
                 items.add(item);
