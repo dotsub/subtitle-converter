@@ -31,6 +31,12 @@ public class WebVttImportHandlerTest extends SubtitleConverterApplicationTests {
 
         List<SubtitleItem> subtitleItemList = webVttImportHandler.importFile(resource.getInputStream());
         assertEquals(21, subtitleItemList.size());
+
+        //test file with no indexes
+        resource = resourceLoader.getResource("classpath:test_no_indexes.vtt");
+
+        subtitleItemList = webVttImportHandler.importFile(resource.getInputStream());
+        assertEquals(21, subtitleItemList.size());
     }
 
     @Test

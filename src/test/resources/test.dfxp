@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt xmlns="http://www.w3.org/2006/04/ttaf1"
+      xmlns:tts="http://www.w3.org/2006/04/ttaf1#styling" xml:lang="en">
+  <head>
+    <styling>
+      <style id="defaultSpeaker" tts:fontSize="12px" tts:fontFamily="SansSerif" tts:fontWeight="normal" tts:fontStyle="normal" tts:textDecoration="none" tts:color="white" tts:backgroundColor="black" tts:textAlign="left" />
+      <style id="defaultCaption" tts:fontSize="12px" tts:fontFamily="SansSerif" tts:fontWeight="normal" tts:fontStyle="normal" tts:textDecoration="none" tts:color="white" tts:backgroundColor="black" tts:textAlign="left" />
+    </styling>
+  </head>
+  <body style="defaultCaption" id="thebody">
+    <div xml:lang="en">
+      <p begin="0:00:00.30" end="0:00:02.00">(Snoring)</p>
+      <p begin="0:00:02.30" end="0:00:03.15">(Whistle Blows)</p>
+      <p begin="0:00:03.30" end="0:00:07.00">(Referee)<br/>Personal Foul! Inactive activities on a glorious day!</p>
+      <p begin="0:00:07.00" end="0:00:08.00">(Kids)<br/>Huh?</p>
+      <p begin="0:00:08.00" end="0:00:10.00">(Referee)<br/>Let's get out there and play!</p>
+      <p begin="0:00:10.00" end="0:00:15.00">(Kids shouting and playing on playground)</p>
+      <p begin="0:00:15.00" end="0:00:16.00">Freeze!</p>
+      <p begin="0:00:16.30" end="0:00:18.00">When do I get to be "it"?</p>
+      <p begin="0:00:18.00" end="0:00:19.00">Uh-oh...</p>
+      <p begin="0:00:19.00" end="0:00:21.00">Hey Reggie, frozen <br/> people can't talk!</p>
+      <p begin="0:00:21.00" end="0:00:23.00">P - L - A - Y !</p>
+      <p begin="0:00:23.00" end="0:00:25.00">Play! An hour a day.</p>
+      <p begin="0:00:25.00" dur="0:00:01.000">I'm it!</p>
+      <p begin="0:00:26.00" dur="0:00:04.00">There are lots of great play ideas online, <br/>but don't stay too long!</p>
+    </div>
+  </body>
+</tt>

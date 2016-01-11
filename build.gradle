@@ -38,6 +38,8 @@ checkstyle {
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter')
 	compile('commons-io:commons-io:2.4')
+	compile('dom4j:dom4j:1.6.1')
+	compile('jaxen:jaxen:1.1.6')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 

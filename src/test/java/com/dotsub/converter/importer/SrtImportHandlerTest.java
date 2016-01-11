@@ -31,6 +31,14 @@ public class SrtImportHandlerTest extends SubtitleConverterApplicationTests {
 
         List<SubtitleItem> subtitleItemList = srtImportHandler.importFile(resource.getInputStream());
         assertEquals(94, subtitleItemList.size());
+
+        resourceLoader.getResource("classpath:test_pal.srt");
+        subtitleItemList = srtImportHandler.importFile(resource.getInputStream());
+        assertEquals(94, subtitleItemList.size());
+        //make sure the hours were properly dropped
+        subtitleItemList.forEach(
+                item -> assertTrue(item.getStartTime() < 3600000)
+        );
     }
 
     @Test
