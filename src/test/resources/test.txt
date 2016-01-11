@@ -1,0 +1,4 @@
+This is not a subtitle file.
+It's just here to test some fail cases.
+If this was a subtitle file it would be importable.
+It's just text so there is nothing we can do it import it.

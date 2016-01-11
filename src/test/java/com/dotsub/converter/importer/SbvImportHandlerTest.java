@@ -1,6 +1,7 @@
 package com.dotsub.converter.importer;
 
 import com.dotsub.converter.SubtitleConverterApplicationTests;
+import com.dotsub.converter.exception.FileFormatException;
 import com.dotsub.converter.model.SubtitleItem;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,18 @@ public class SbvImportHandlerTest extends SubtitleConverterApplicationTests {
 
         List<SubtitleItem> subtitleItemList = sbvImportHandler.importFile(resource.getInputStream());
         assertEquals(21, subtitleItemList.size());
+    }
+
+    @Test
+    public void testImportFileWrongFormat() throws Exception {
+        Resource resource = resourceLoader.getResource("classpath:test.vtt");
+
+        try {
+            sbvImportHandler.importFile(resource.getInputStream());
+        }
+        catch (FileFormatException e) {
+            //file format exception should be thrown since this is a vtt file
+        }
     }
 
 }

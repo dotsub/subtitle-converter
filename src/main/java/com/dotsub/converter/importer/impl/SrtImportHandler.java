@@ -43,73 +43,72 @@ public class SrtImportHandler implements SubtitleImportHandler {
             Pattern.compile(".*(\\d+):(\\d+):(\\d+),(\\d+).*-->.*(\\d+):(\\d+):(\\d+),(\\d+).*");
 
     @Override
-    public List<SubtitleItem> importFile(InputStream inputStream) {
+    public String getFormatName() {
+        return "SubRip";
+    }
 
-        try {
-            Iterator lines = IOUtils.lineIterator(new InputStreamReader(inputStream, "UTF-8"));
+    @Override
+    public List<SubtitleItem> importFile(InputStream inputStream) throws IOException {
+        Iterator lines = IOUtils.lineIterator(new InputStreamReader(inputStream, "UTF-8"));
 
-            List<SubtitleItem> items = new ArrayList<>();
-            int lineNumber = 0;
-            Boolean isPal = null;
-            int palOffset = 0;
+        List<SubtitleItem> items = new ArrayList<>();
+        int lineNumber = 0;
+        Boolean isPal = null;
+        int palOffset = 0;
 
-            while (lines.hasNext()) {
-                String line = (String) lines.next();
-                log.debug(line);
-                lineNumber++;
-                if (line.equals("")) {
-                    continue;
-                }
-                String times = (String) lines.next();
-                lineNumber++;
-                Matcher matcher = pattern.matcher(times);
-                if (!matcher.matches()) {
-                    if (lineNumber < 3) {
-                        log.debug(times);
-                        throw new FileFormatException("File does not match expected srt format");
-                    } else {
-                        throw new FileImportException("File does not match expected srt format");
-                    }
-                }
-                if (isPal == null) {
-                    palOffset = Integer.parseInt(matcher.group(1)) * 3600000;
-                    isPal = palOffset > 0;
-                }
-
-                int start = 0;
-                start += (Integer.parseInt(matcher.group(1)) * 3600000) - palOffset;
-                start += Integer.parseInt(matcher.group(2)) * 60000;
-                start += Integer.parseInt(matcher.group(3)) * 1000;
-                start += Integer.parseInt(matcher.group(4));
-
-                int end = 0;
-                end += (Integer.parseInt(matcher.group(5)) * 3600000) - palOffset;
-                end += Integer.parseInt(matcher.group(6)) * 60000;
-                end += Integer.parseInt(matcher.group(7)) * 1000;
-                end += Integer.parseInt(matcher.group(8));
-
-                int duration = end - start;
-                String content;
-                StringBuilder caption = new StringBuilder("");
-                while (lines.hasNext() && (content = (String) lines.next()) != null && !content.trim().equals("")) {
-                    lineNumber++;
-                    content = content.trim();
-                    caption.append("\n");
-                    caption.append(content);
-                }
-                lineNumber++;
-                if (log.isDebugEnabled()) {
-                    log.debug(
-                            format("Creating a new subtitle from:\t times:%d ms to %d ms  \t content: %s\t",
-                                    start, duration, caption.toString()));
-                }
-                SubtitleItem item = new SubtitleItem(start, duration, caption.toString());
-                items.add(item);
+        while (lines.hasNext()) {
+            String line = (String) lines.next();
+            log.debug(line);
+            lineNumber++;
+            if (line.equals("")) {
+                continue;
             }
-            return items;
+            String times = (String) lines.next();
+            lineNumber++;
+            Matcher matcher = pattern.matcher(times);
+            if (!matcher.matches()) {
+                if (lineNumber < 3) {
+                    log.debug(times);
+                    throw new FileFormatException("File does not match expected srt format");
+                } else {
+                    throw new FileImportException("File does not match expected srt format");
+                }
+            }
+            if (isPal == null) {
+                palOffset = Integer.parseInt(matcher.group(1)) * 3600000;
+                isPal = palOffset > 0;
+            }
+
+            int start = 0;
+            start += (Integer.parseInt(matcher.group(1)) * 3600000) - palOffset;
+            start += Integer.parseInt(matcher.group(2)) * 60000;
+            start += Integer.parseInt(matcher.group(3)) * 1000;
+            start += Integer.parseInt(matcher.group(4));
+
+            int end = 0;
+            end += (Integer.parseInt(matcher.group(5)) * 3600000) - palOffset;
+            end += Integer.parseInt(matcher.group(6)) * 60000;
+            end += Integer.parseInt(matcher.group(7)) * 1000;
+            end += Integer.parseInt(matcher.group(8));
+
+            int duration = end - start;
+            String content;
+            StringBuilder caption = new StringBuilder("");
+            while (lines.hasNext() && (content = (String) lines.next()) != null && !content.trim().equals("")) {
+                lineNumber++;
+                content = content.trim();
+                caption.append("\n");
+                caption.append(content);
+            }
+            lineNumber++;
+            if (log.isDebugEnabled()) {
+                log.debug(
+                        format("Creating a new subtitle from:\t times:%d ms to %d ms  \t content: %s\t",
+                                start, duration, caption.toString()));
+            }
+            SubtitleItem item = new SubtitleItem(start, duration, caption.toString());
+            items.add(item);
         }
-        catch (IOException e) {
-            throw new FileFormatException("Unable to read IO stream");
-        }
+        return items;
     }
 }

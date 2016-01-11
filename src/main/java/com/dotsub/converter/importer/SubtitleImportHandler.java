@@ -2,6 +2,7 @@ package com.dotsub.converter.importer;
 
 import com.dotsub.converter.model.SubtitleItem;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import java.util.List;
  */
 public interface SubtitleImportHandler {
 
-    public List<SubtitleItem> importFile(InputStream inputStream);
+    String getFormatName();
+
+    List<SubtitleItem> importFile(InputStream inputStream) throws IOException;
 
 }

@@ -34,82 +34,82 @@ public class WebVttImportHandler implements SubtitleImportHandler {
             Pattern.compile(".*(\\d+):(\\d+).(\\d+).*-->.*(\\d+):(\\d+).(\\d+).*");
 
     @Override
-    public List<SubtitleItem> importFile(InputStream inputStream) {
-        try {
-            Iterator lines = IOUtils.lineIterator(new InputStreamReader(inputStream, "UTF-8"));
+    public String getFormatName() {
+        return "WebVTT";
+    }
 
-            List<SubtitleItem> items = new ArrayList<>();
-            int lineNumber = 0;
+    @Override
+    public List<SubtitleItem> importFile(InputStream inputStream) throws IOException {
+        Iterator lines = IOUtils.lineIterator(new InputStreamReader(inputStream, "UTF-8"));
 
-            while (lines.hasNext()) {
-                String line = (String) lines.next();
-                log.debug(line);
-                lineNumber++;
+        List<SubtitleItem> items = new ArrayList<>();
+        int lineNumber = 0;
 
-                if (processHeader(lineNumber, line)) {
-                    continue;
-                }
-                //header is done including its terminator. first line is an cue ID or a time.
-                Matcher matcher = pattern.matcher(line);
-                Matcher hourLessMatcher = hourlessPattern.matcher(line);
-                log.debug("Checking: " + line);
-                if (!matcher.matches() && !hourLessMatcher.matches()) {
-                    //grab next line to see if it is the time this was just an ID
-                    line = (String) lines.next();
-                    lineNumber++;
-                    matcher = pattern.matcher(line);
-                    hourLessMatcher = hourlessPattern.matcher(line);
-                    if (!matcher.matches() && !hourLessMatcher.matches()) {
-                        throw new FileFormatException("file does not match expected vtt format");
-                    }
-                }
-                log.debug(line);
+        while (lines.hasNext()) {
+            String line = (String) lines.next();
+            log.debug(line);
+            lineNumber++;
 
-                int start = 0;
-                int end = 0;
-                if (matcher.matches()) {
-                    start += (Integer.parseInt(matcher.group(1)) * 3600000);
-                    start += Integer.parseInt(matcher.group(2)) * 60000;
-                    start += Integer.parseInt(matcher.group(3)) * 1000;
-                    start += Integer.parseInt(matcher.group(4));
-                    end += (Integer.parseInt(matcher.group(5)) * 3600000);
-                    end += Integer.parseInt(matcher.group(6)) * 60000;
-                    end += Integer.parseInt(matcher.group(7)) * 1000;
-                    end += Integer.parseInt(matcher.group(8));
-                }
-                else {
-                    start += Integer.parseInt(hourLessMatcher.group(1)) * 60000;
-                    start += Integer.parseInt(hourLessMatcher.group(2)) * 1000;
-                    start += Integer.parseInt(hourLessMatcher.group(3));
-                    end += Integer.parseInt(hourLessMatcher.group(4)) * 60000;
-                    end += Integer.parseInt(hourLessMatcher.group(5)) * 1000;
-                    end += Integer.parseInt(hourLessMatcher.group(6));
-                }
-                int duration = end - start;
-                String content;
-                StringBuilder caption = new StringBuilder("");
-                while (lines.hasNext() && (content = (String) lines.next()) != null && !content.trim().equals("")) {
-                    lineNumber++;
-                    content = content.trim();
-                    caption.append("\n");
-                    caption.append(content);
-                }
-                lineNumber++;
-                //replace all non supported info
-                String subtitleContent = caption.toString().replaceAll("<(.|\n)*?>", "");
-                if (log.isDebugEnabled()) {
-                    log.debug(
-                            format("creating a new caption from: \t times:%d ms to %d ms  \t content: %s \t",
-                                    start, duration, subtitleContent));
-                }
-                SubtitleItem item = new SubtitleItem(start, duration, subtitleContent);
-                items.add(item);
+            if (processHeader(lineNumber, line)) {
+                continue;
             }
-            return items;
+            //header is done including its terminator. first line is an cue ID or a time.
+            Matcher matcher = pattern.matcher(line);
+            Matcher hourLessMatcher = hourlessPattern.matcher(line);
+            log.debug("Checking: " + line);
+            if (!matcher.matches() && !hourLessMatcher.matches()) {
+                //grab next line to see if it is the time this was just an ID
+                line = (String) lines.next();
+                lineNumber++;
+                matcher = pattern.matcher(line);
+                hourLessMatcher = hourlessPattern.matcher(line);
+                if (!matcher.matches() && !hourLessMatcher.matches()) {
+                    throw new FileFormatException("file does not match expected vtt format");
+                }
+            }
+            log.debug(line);
+
+            int start = 0;
+            int end = 0;
+            if (matcher.matches()) {
+                start += (Integer.parseInt(matcher.group(1)) * 3600000);
+                start += Integer.parseInt(matcher.group(2)) * 60000;
+                start += Integer.parseInt(matcher.group(3)) * 1000;
+                start += Integer.parseInt(matcher.group(4));
+                end += (Integer.parseInt(matcher.group(5)) * 3600000);
+                end += Integer.parseInt(matcher.group(6)) * 60000;
+                end += Integer.parseInt(matcher.group(7)) * 1000;
+                end += Integer.parseInt(matcher.group(8));
+            }
+            else {
+                start += Integer.parseInt(hourLessMatcher.group(1)) * 60000;
+                start += Integer.parseInt(hourLessMatcher.group(2)) * 1000;
+                start += Integer.parseInt(hourLessMatcher.group(3));
+                end += Integer.parseInt(hourLessMatcher.group(4)) * 60000;
+                end += Integer.parseInt(hourLessMatcher.group(5)) * 1000;
+                end += Integer.parseInt(hourLessMatcher.group(6));
+            }
+            int duration = end - start;
+            String content;
+            StringBuilder caption = new StringBuilder("");
+            while (lines.hasNext() && (content = (String) lines.next()) != null && !content.trim().equals("")) {
+                lineNumber++;
+                content = content.trim();
+                caption.append("\n");
+                caption.append(content);
+            }
+            lineNumber++;
+            //replace all non supported info
+            String subtitleContent = caption.toString().replaceAll("<(.|\n)*?>", "");
+            if (log.isDebugEnabled()) {
+                log.debug(
+                        format("creating a new caption from: \t times:%d ms to %d ms  \t content: %s \t",
+                                start, duration, subtitleContent));
+            }
+            SubtitleItem item = new SubtitleItem(start, duration, subtitleContent);
+            items.add(item);
         }
-        catch (IOException e) {
-            throw new FileFormatException("Unable to read IO stream");
-        }
+        return items;
     }
 
     private boolean processHeader(int lineNumber, String line) throws FileFormatException {

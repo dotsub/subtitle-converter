@@ -29,6 +29,11 @@ public class DfxpImportHandler implements SubtitleImportHandler {
     private static final Pattern otherPattern = Pattern.compile("(\\d+)([a-zA-Z]+)");
 
     @Override
+    public String getFormatName() {
+        return "Timed-Text (DFXP)";
+    }
+
+    @Override
     public List<SubtitleItem> importFile(InputStream inputStream) {
         try {
             List<SubtitleItem> items = new ArrayList<>();

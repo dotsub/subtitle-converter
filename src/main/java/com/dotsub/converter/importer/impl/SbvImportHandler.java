@@ -33,56 +33,56 @@ public class SbvImportHandler implements SubtitleImportHandler {
             Pattern.compile(".*(\\d+):(\\d+):(\\d+)\\.(\\d+),(\\d+):(\\d+):(\\d+)\\.(\\d+).*");
 
     @Override
-    public List<SubtitleItem> importFile(InputStream inputStream) {
-        try {
-            Iterator lines = IOUtils.lineIterator(new InputStreamReader(inputStream, "UTF-8"));
-            List<SubtitleItem> items = new ArrayList<>();
-            int lineNumber = 0;
+    public String getFormatName() {
+        return "SubViewer";
+    }
 
-            while (lines.hasNext()) {
-                String times = (String) lines.next();
-                lineNumber++;
-                Matcher matcher = pattern.matcher(times);
-                if (!matcher.matches()) {
-                    if (lineNumber < 3) {
-                        log.debug(times);
-                        throw new FileFormatException("file does not match expected sbv format");
-                    } else {
-                        throw new FileImportException("file does not match expected sbv format");
-                    }
+    @Override
+    public List<SubtitleItem> importFile(InputStream inputStream) throws IOException {
+        Iterator lines = IOUtils.lineIterator(new InputStreamReader(inputStream, "UTF-8"));
+        List<SubtitleItem> items = new ArrayList<>();
+        int lineNumber = 0;
+
+        while (lines.hasNext()) {
+            String times = (String) lines.next();
+            lineNumber++;
+            Matcher matcher = pattern.matcher(times);
+            if (!matcher.matches()) {
+                if (lineNumber < 3) {
+                    log.debug(times);
+                    throw new FileFormatException("File does not match expected sbv format");
+                } else {
+                    throw new FileImportException("File does not match expected sbv format");
                 }
-
-                int start = 0;
-                start += (Integer.parseInt(matcher.group(1)) * 3600000);
-                start += Integer.parseInt(matcher.group(2)) * 60000;
-                start += Integer.parseInt(matcher.group(3)) * 1000;
-                start += Integer.parseInt(matcher.group(4));
-
-                int end = 0;
-                end += (Integer.parseInt(matcher.group(5)) * 3600000);
-                end += Integer.parseInt(matcher.group(6)) * 60000;
-                end += Integer.parseInt(matcher.group(7)) * 1000;
-                end += Integer.parseInt(matcher.group(8));
-
-                int durration = end - start;
-                String content;
-                StringBuilder caption = new StringBuilder("");
-                while (lines.hasNext() && (content = (String) lines.next()) != null && !content.equals("")) {
-                    lineNumber++;
-                    content = content.trim();
-                    caption.append("\n");
-                    caption.append(content);
-                }
-                lineNumber++;
-                log.debug(format("creating a new caption from: \t times:%d ms to %d ms  \t content: %s \t",
-                        start, durration, caption.toString()));
-                SubtitleItem item = new SubtitleItem(start, durration, caption.toString());
-                items.add(item);
             }
-            return items;
+
+            int start = 0;
+            start += (Integer.parseInt(matcher.group(1)) * 3600000);
+            start += Integer.parseInt(matcher.group(2)) * 60000;
+            start += Integer.parseInt(matcher.group(3)) * 1000;
+            start += Integer.parseInt(matcher.group(4));
+
+            int end = 0;
+            end += (Integer.parseInt(matcher.group(5)) * 3600000);
+            end += Integer.parseInt(matcher.group(6)) * 60000;
+            end += Integer.parseInt(matcher.group(7)) * 1000;
+            end += Integer.parseInt(matcher.group(8));
+
+            int durration = end - start;
+            String content;
+            StringBuilder caption = new StringBuilder("");
+            while (lines.hasNext() && (content = (String) lines.next()) != null && !content.equals("")) {
+                lineNumber++;
+                content = content.trim();
+                caption.append("\n");
+                caption.append(content);
+            }
+            lineNumber++;
+            log.debug(format("creating a new caption from: \t times:%d ms to %d ms  \t content: %s \t",
+                    start, durration, caption.toString()));
+            SubtitleItem item = new SubtitleItem(start, durration, caption.toString());
+            items.add(item);
         }
-        catch (IOException e) {
-            throw new FileFormatException("Unable to read IO stream");
-        }
+        return items;
     }
 }
