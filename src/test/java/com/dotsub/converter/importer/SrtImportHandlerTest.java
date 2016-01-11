@@ -32,6 +32,17 @@ public class SrtImportHandlerTest extends SubtitleConverterApplicationTests {
         List<SubtitleItem> subtitleItemList = srtImportHandler.importFile(resource.getInputStream());
         assertEquals(94, subtitleItemList.size());
 
+        //mock item
+        SubtitleItem mockItem = new SubtitleItem(0, 2832, "[Brooks]\nDotsub's number one mission is to ensure");
+        //check an item in the file.
+        SubtitleItem subtitleItem = subtitleItemList.get(0);
+        assertEquals(mockItem.getStartTime(), subtitleItem.getStartTime());
+        assertEquals(mockItem.getDuration(), subtitleItem.getDuration());
+        assertEquals(mockItem.getContent(), subtitleItem.getContent());
+        assertNotNull(subtitleItem.toString());
+        assertNotNull(subtitleItem.hashCode());
+        assertEquals(mockItem, subtitleItem);
+
         resourceLoader.getResource("classpath:test_pal.srt");
         subtitleItemList = srtImportHandler.importFile(resource.getInputStream());
         assertEquals(94, subtitleItemList.size());

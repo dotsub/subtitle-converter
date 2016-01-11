@@ -24,31 +24,21 @@ public class SubtitleItem {
     public SubtitleItem(int startTime, int duration, String content) {
         this.startTime = startTime;
         this.duration = duration;
-        this.content = content;
+        if (content != null) {
+            this.content = content.trim();
+        }
     }
 
     public int getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(int startTime) {
-        this.startTime = startTime;
-    }
-
     public int getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
     public String getContent() {
         return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     @Override
