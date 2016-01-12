@@ -49,6 +49,21 @@ public class CaptionUtilTest {
         time = CaptionUtil.formatPeriod("dfxp", 60000);
         assertEquals("00:01:00.000", time);
 
+        time = CaptionUtil.formatPeriod("sbv", 0);
+        assertEquals("00:00:00.00", time);
+
+        time = CaptionUtil.formatPeriod("sbv", 1000);
+        assertEquals("00:00:01.00", time);
+
+        time = CaptionUtil.formatPeriod("sbv", 1010);
+        assertEquals("00:00:01.01", time);
+
+        time = CaptionUtil.formatPeriod("sbv", 1001);
+        assertEquals("00:00:01.00", time);
+
+        time = CaptionUtil.formatPeriod("sbv", 1005);
+        assertEquals("00:00:01.01", time);
+
         //throw a non-supported format at it. It should error.
         try {
             CaptionUtil.formatPeriod("asdf", 60000);

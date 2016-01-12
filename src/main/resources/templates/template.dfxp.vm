@@ -13,7 +13,7 @@ xmlns:tts="http://www.w3.org/ns/ttml#styling">
 #foreach ($subtitle in $subtitles)
 #set( $startTime = $subtitle.startTime)
 #set( $stopTime = $subtitle.startTime + $subtitle.duration)
-            <p begin='${CaptionUtil.formatPeriod("dfxp", $startTime)}' end='${CaptionUtil.formatPeriod("dfxp", $stopTime)}' style="4">${CaptionUtil.nl2br($CaptionUtil.escapeXml($subtitle.content))}</p>
+            <p begin='${CaptionUtil.formatPeriod("dfxp", $startTime)}' end='${CaptionUtil.formatPeriod("dfxp", $stopTime)}' style="4">${CaptionUtil.formatLineSeperator("html", $CaptionUtil.escapeXml($subtitle.content))}</p>
 #end
         </div>
      </body>

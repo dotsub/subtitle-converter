@@ -1,0 +1,7 @@
+#foreach ($subtitle in $subtitles)
+#set( $startTime = $subtitle.startTime)
+#set( $stopTime = $subtitle.startTime + $subtitle.duration)
+${CaptionUtil.formatPeriod("sbv", $startTime)},${CaptionUtil.formatPeriod("sbv", $stopTime)}
+${CaptionUtil.formatLineSeperator("sbv", $subtitle.content)}
+
+#end
