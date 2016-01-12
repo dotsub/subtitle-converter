@@ -1,0 +1,8 @@
+#set($bom ="\ufeff")$bom#foreach ($subtitle in $subtitles)
+$velocityCount
+#set( $startTime = $subtitle.startTime)
+#set( $stopTime = $subtitle.startTime + $subtitle.duration)
+${CaptionUtil.formatPeriod("srt", $startTime)} --> ${CaptionUtil.formatPeriod("srt", $stopTime)}
+$subtitle.content
+
+#end

@@ -1,0 +1,9 @@
+WEBVTT
+
+#foreach ($subtitle in $subtitles)
+#set( $startTime = $subtitle.startTime)
+#set( $stopTime = $subtitle.startTime + $subtitle.duration)
+${CaptionUtil.formatPeriod("vtt", $startTime)} --> ${CaptionUtil.formatPeriod("vtt", $stopTime)}
+$subtitle.content
+
+#end

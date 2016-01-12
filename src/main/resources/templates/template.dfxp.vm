@@ -1,0 +1,22 @@
+<tt xml:lang="$language" xmlns="http://www.w3.org/ns/ttml"
+xmlns:tts="http://www.w3.org/ns/ttml#styling">
+  <head>
+   <styling>
+      <style id="1" tts:textAlign="right"/>
+      <style id="2" tts:color="transparent"/>
+      <style id="3" tts:backgroundColor="transparent" tts:color="#FFCC00"/>
+      <style id="4" style="3" tts:fontSize="+2" tts:fontFamily="Arial"  tts:textAlign="center"/>
+   </styling>
+  </head>
+      <body>
+        <div xml:lang="$language">
+#foreach ($subtitle in $subtitles)
+#set( $startTime = $subtitle.startTime)
+#set( $stopTime = $subtitle.startTime + $subtitle.duration)
+            <p begin='${CaptionUtil.formatPeriod("dfxp", $startTime)}' end='${CaptionUtil.formatPeriod("dfxp", $stopTime)}' style="4">${CaptionUtil.nl2br($CaptionUtil.escapeXml($subtitle.content))}</p>
+#end
+        </div>
+     </body>
+</tt>
+
+
