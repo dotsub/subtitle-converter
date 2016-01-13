@@ -43,7 +43,7 @@ public class SrtImportHandlerTest extends SubtitleConverterApplicationTests {
         assertNotNull(subtitleItem.hashCode());
         assertEquals(mockItem, subtitleItem);
 
-        resourceLoader.getResource("classpath:test_pal.srt");
+        resource = resourceLoader.getResource("classpath:test_pal.srt");
         subtitleItemList = srtImportHandler.importFile(resource.getInputStream());
         assertEquals(94, subtitleItemList.size());
         //make sure the hours were properly dropped

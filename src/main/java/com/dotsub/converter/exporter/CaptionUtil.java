@@ -26,7 +26,7 @@ public final class CaptionUtil {
             .minimumPrintedDigits(2).appendHours().appendSeparator(":").appendMinutes().appendSeparator(":")
             .appendSeconds().appendSeparator(".").appendMillis3Digit().toFormatter();
 
-    private static final PeriodFormatter sbvFormatter = new PeriodFormatterBuilder().printZeroAlways()
+    private static final PeriodFormatter noMillsFormatter = new PeriodFormatterBuilder().printZeroAlways()
             .minimumPrintedDigits(2).appendHours().appendSeparator(":").appendMinutes().appendSeparator(":")
             .appendSeconds().toFormatter();
 
@@ -39,6 +39,7 @@ public final class CaptionUtil {
     public static String formatPeriod(String format, Integer periodInMills) {
 
         Period period = new Period(periodInMills.intValue());
+        DecimalFormat df = new DecimalFormat("00");
 
         switch (format) {
             case "srt":
@@ -50,9 +51,12 @@ public final class CaptionUtil {
             case "sbv":
                 //round to two digits
                 //appendMillis and appendMillis3Digit mills don't respect max digits. a manual work around
-                DecimalFormat df = new DecimalFormat("00");
-                double mills = Math.round(period.getMillis()/10d);
-                return sbvFormatter.print(period) + "." + df.format(mills);
+                double mills = Math.round(period.getMillis() / 10d);
+                return noMillsFormatter.print(period) + "." + df.format(mills);
+            case "stl":
+                //last field is frames based on 30FPS
+                double frames = Math.round(30d * period.getMillis() / 1000d);
+                return noMillsFormatter.print(period) + ":" + df.format(frames);
             default:
                 throw new RuntimeException(String.format("Unknown time format '%s'", format));
         }
@@ -62,12 +66,20 @@ public final class CaptionUtil {
         return StringEscapeUtils.escapeXml(string);
     }
 
+    /**
+     * Converts to format specific line endings.
+     * @param format the format being written
+     * @param str the string to correct line endings in.
+     * @return the line with format correct line breaks
+     */
     public static String formatLineSeperator(String format, String str) {
         switch (format) {
             case "html":
                 return str.replaceAll("\n", "<br/>");
             case "sbv":
                 return str.replaceAll("\n", "[br]");
+            case "stl":
+                return str.replaceAll("\n", "|");
             default:
                 throw new RuntimeException(String.format("Unknown time format '%s'", format));
         }
