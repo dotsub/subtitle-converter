@@ -1,0 +1,18 @@
+[Script Info]
+Original Dotsub.com
+ScriptType: v4.00+
+Collisions: Normal
+Timer: 100.0000
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Arial Narrow,27,&H00FFFFFF,&H00010101,&H00010101,&H10000000,-1,0,0,0,100,100,0,0.00,1,2,0,2,0,0,19,0
+
+[Events]
+Format: Layer, Start, End, Style, Actor, MarginL, MarginR, MarginV, Effect, Text
+#foreach ($subtitle in $subtitles)
+#set( $startTime = $subtitle.startTime)
+#set( $stopTime = $subtitle.startTime + $subtitle.duration)
+Dialogue: 0,${CaptionUtil.formatPeriod("ssa", $startTime)},${CaptionUtil.formatPeriod("ssa", $stopTime)},Default,00001,0000,0000,0000,,${CaptionUtil.formatLineSeperator("ssa", $subtitle.content)}
+#end

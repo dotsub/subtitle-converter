@@ -30,6 +30,10 @@ public final class CaptionUtil {
             .minimumPrintedDigits(2).appendHours().appendSeparator(":").appendMinutes().appendSeparator(":")
             .appendSeconds().toFormatter();
 
+    private static final PeriodFormatter ssaFormatter = new PeriodFormatterBuilder().printZeroAlways()
+            .minimumPrintedDigits(1).appendHours().appendSeparator(":").minimumPrintedDigits(2).appendMinutes()
+            .appendSeparator(":").appendSeconds().toFormatter();
+
     /**
      * Formats a time in milliseconds to the desired caption format time-code.
      * @param format the format to be created.
@@ -49,10 +53,11 @@ public final class CaptionUtil {
             case "dfxp":
                 return dfxpFormatter.print(period);
             case "sbv":
-                //round to two digits
-                //appendMillis and appendMillis3Digit mills don't respect max digits. a manual work around
-                double mills = Math.round(period.getMillis() / 10d);
+                double mills = getTwoDigitMills(period);
                 return noMillsFormatter.print(period) + "." + df.format(mills);
+            case "ssa":
+                mills = getTwoDigitMills(period);
+                return ssaFormatter.print(period) + "." + df.format(mills);
             case "stl":
                 //last field is frames based on 30FPS
                 double frames = Math.round(30d * period.getMillis() / 1000d);
@@ -60,6 +65,12 @@ public final class CaptionUtil {
             default:
                 throw new RuntimeException(String.format("Unknown time format '%s'", format));
         }
+    }
+
+    private static double getTwoDigitMills(Period period) {
+        //round to two digits
+        //appendMillis and appendMillis3Digit mills don't respect max digits. a manual work around
+        return (double) Math.round(period.getMillis() / 10d);
     }
 
     public static String escapeXml(String string) {
@@ -80,6 +91,8 @@ public final class CaptionUtil {
                 return str.replaceAll("\n", "[br]");
             case "stl":
                 return str.replaceAll("\n", "|");
+            case "ssa":
+                return str.replaceAll("\n", "\\\\N");
             default:
                 throw new RuntimeException(String.format("Unknown time format '%s'", format));
         }
