@@ -1,0 +1,20 @@
+[Script Info]
+; This is a comment
+ScriptType: v4.00+
+Collisions: Normal
+PlayResX: 1024
+PlayResY: 768
+Timer: 100.0000
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Arial,16,&H00000000,&H00ffffff,&H00ffffff,&H00c0c0c0,-1,0,0,0,100,100,0,0.00,1,2,3,2,20,20,20,1
+
+[Events]
+Format: Layer, Start, End, Style, Actor, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:06.00,Default,,0000,0000,0000,,[Dotsub\NAny Video Any Language]
+Dialogue: 0,0:00:07.10,0:00:10.11,Default,,0000,0000,0000,,[Language Powered Video]
+Comment: 0,0:00:07.00,0:00:10.00,Default,,0000,0000,0000,,I'm not shown
+Dialogue: 0,0:00:10.00,0:00:15.00,Default,,0000,0000,0000,,[How to lift your video search results higher, while increasing Sponsor and Ad Value]
+Dialogue: 0,0:00:15.00,0:00:18.00,Default,,0000,0000,0000,,Online videos are becoming more and more important
+Dialogue: 0,0:00:18.00,0:00:19.00,Default,,0000,0000,0000,,{\pos(400,570)}to communicate {\b1}worldwide{\b0}.
