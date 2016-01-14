@@ -1,9 +1,9 @@
 package com.dotsub.converter.exporter;
 
-import com.dotsub.converter.SubtitleConverterApplicationTests;
+import com.dotsub.converter.SubtitleConverterTests;
+import com.dotsub.converter.exporter.impl.SbvExportHandler;
 import com.dotsub.converter.model.SubtitleItem;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +16,9 @@ import static org.junit.Assert.assertNotNull;
  * For: Dotsub LLC.
  * Date: 16-01-12.
  */
-public class SbvExportHandlerTest extends SubtitleConverterApplicationTests {
+public class SbvExportHandlerTest extends SubtitleConverterTests {
 
-    @Autowired
-    private SubtitleExportHandler sbvExportHandler;
+    private SubtitleExportHandler sbvExportHandler = new SbvExportHandler();
 
     @Test
     public void testSbvExport() throws Exception {

@@ -1,9 +1,9 @@
 package com.dotsub.converter.exporter;
 
-import com.dotsub.converter.SubtitleConverterApplicationTests;
+import com.dotsub.converter.SubtitleConverterTests;
+import com.dotsub.converter.exporter.impl.WebVttExportHandler;
 import com.dotsub.converter.model.SubtitleItem;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +16,9 @@ import static org.junit.Assert.assertNotNull;
  * For: Dotsub LLC.
  * Date: 16-01-11.
  */
-public class WebVttExportHandler extends SubtitleConverterApplicationTests {
+public class WebVttExportHandlerTest extends SubtitleConverterTests {
 
-    @Autowired
-    private SubtitleExportHandler webVttExportHandler;
+    private SubtitleExportHandler webVttExportHandler = new WebVttExportHandler();
 
     @Test
     public void testWebVttExport() throws Exception {

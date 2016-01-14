@@ -1,13 +1,9 @@
 package com.dotsub.converter.importer;
 
-import com.dotsub.converter.SubtitleConverterApplicationTests;
+import com.dotsub.converter.SubtitleConverterTests;
 import com.dotsub.converter.exception.FileNotSupportedException;
 import com.dotsub.converter.model.SubtitleItem;
-import org.apache.commons.io.FileUtils;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 
 import java.util.List;
 
@@ -18,22 +14,17 @@ import static org.junit.Assert.*;
  * For: Dotsub LLC.
  * Date: 16-01-11.
  */
-public class SubtitleImporterTest extends SubtitleConverterApplicationTests {
+public class SubtitleImporterTest extends SubtitleConverterTests {
 
-    @Autowired
-    private SubtitleImporter subtitleImporter;
-
-    @Autowired
-    private ResourceLoader resourceLoader;
+    private SubtitleImporter subtitleImporter = new SubtitleImporter();
 
     @Test
     public void testImportFormatIsDetected() throws Exception {
         String[] files = {"test.sbv", "test.vtt", "test.srt", "test.dfxp"};
 
         for (String file : files) {
-            Resource resource = resourceLoader.getResource("classpath:" + file);
             try {
-                List<SubtitleItem> subtitleItemList = subtitleImporter.importFile(resource.getInputStream());
+                List<SubtitleItem> subtitleItemList = subtitleImporter.importFile(getFile(file));
                 assertNotNull(subtitleItemList);
                 assertTrue(subtitleItemList.size() > 1);
             }
@@ -46,9 +37,8 @@ public class SubtitleImporterTest extends SubtitleConverterApplicationTests {
 
     @Test
     public void testNotSubtitleFile() throws Exception {
-        Resource resource = resourceLoader.getResource("classpath:test.txt");
         try {
-            subtitleImporter.importFile(resource.getInputStream());
+            subtitleImporter.importFile(getFile("test.txt"));
             fail("This file should not be importable.");
         }
         catch (FileNotSupportedException e) {

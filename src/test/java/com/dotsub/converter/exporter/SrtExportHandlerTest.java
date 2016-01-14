@@ -1,10 +1,9 @@
 package com.dotsub.converter.exporter;
 
-import com.dotsub.converter.SubtitleConverterApplicationTests;
+import com.dotsub.converter.SubtitleConverterTests;
 import com.dotsub.converter.exporter.impl.SrtExportHandler;
 import com.dotsub.converter.model.SubtitleItem;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +15,9 @@ import static org.junit.Assert.*;
  * For: Dotsub LLC.
  * Date: 16-01-11.
  */
-public class SrtExportHandlerTest extends SubtitleConverterApplicationTests {
+public class SrtExportHandlerTest extends SubtitleConverterTests {
 
-    @Autowired
-    private SrtExportHandler srtExportHandler;
+    private SrtExportHandler srtExportHandler = new SrtExportHandler();
 
     @Test
     public void testSrtExport() throws Exception {

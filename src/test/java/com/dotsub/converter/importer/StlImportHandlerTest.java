@@ -1,12 +1,10 @@
 package com.dotsub.converter.importer;
 
-import com.dotsub.converter.SubtitleConverterApplicationTests;
+import com.dotsub.converter.SubtitleConverterTests;
 import com.dotsub.converter.exception.FileFormatException;
+import com.dotsub.converter.importer.impl.StlImportHandler;
 import com.dotsub.converter.model.SubtitleItem;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 
 import java.util.List;
 
@@ -18,23 +16,17 @@ import static org.junit.Assert.assertTrue;
  * For: Dotsub LLC.
  * Date: 16-01-12.
  */
-public class StlImportHandlerTest extends SubtitleConverterApplicationTests {
+public class StlImportHandlerTest extends SubtitleConverterTests {
 
-    @Autowired
-    private SubtitleImporter stlSubtitleImporter;
-
-    @Autowired
-    private ResourceLoader resourceLoader;
+    private SubtitleImportHandler stlSubtitleImporter = new StlImportHandler();
 
     @Test
     public void testImportTestFile() throws Exception {
-        Resource resource = resourceLoader.getResource("classpath:test.stl");
 
-        List<SubtitleItem> subtitleItemList = stlSubtitleImporter.importFile(resource.getInputStream());
+        List<SubtitleItem> subtitleItemList = stlSubtitleImporter.importFile(getFile("test.stl"));
         assertEquals(21, subtitleItemList.size());
 
-        resource = resourceLoader.getResource("classpath:test_pal.stl");
-        subtitleItemList = stlSubtitleImporter.importFile(resource.getInputStream());
+        subtitleItemList = stlSubtitleImporter.importFile(getFile("test_pal.stl"));
         assertEquals(21, subtitleItemList.size());
         //make sure the hours were properly dropped
         subtitleItemList.forEach(
@@ -44,10 +36,9 @@ public class StlImportHandlerTest extends SubtitleConverterApplicationTests {
 
     @Test
     public void testImportFileWrongFormat() throws Exception {
-        Resource resource = resourceLoader.getResource("classpath:test.vtt");
 
         try {
-            stlSubtitleImporter.importFile(resource.getInputStream());
+            stlSubtitleImporter.importFile(getFile("test.srt"));
         }
         catch (FileFormatException e) {
             //file format exception should be thrown since this is a vtt file

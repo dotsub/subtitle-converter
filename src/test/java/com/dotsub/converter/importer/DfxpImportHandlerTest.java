@@ -1,11 +1,9 @@
 package com.dotsub.converter.importer;
 
-import com.dotsub.converter.SubtitleConverterApplicationTests;
+import com.dotsub.converter.SubtitleConverterTests;
+import com.dotsub.converter.importer.impl.DfxpImportHandler;
 import com.dotsub.converter.model.SubtitleItem;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 
 import java.util.List;
 
@@ -16,19 +14,14 @@ import static org.junit.Assert.*;
  * For: Dotsub LLC.
  * Date: 16-01-08.
  */
-public class DfxpImportHandlerTest extends SubtitleConverterApplicationTests {
+public class DfxpImportHandlerTest extends SubtitleConverterTests {
 
-    @Autowired
-    private SubtitleImportHandler dfxpImportHandler;
-
-    @Autowired
-    private ResourceLoader resourceLoader;
+    private SubtitleImportHandler dfxpImportHandler = new DfxpImportHandler();
 
     @Test
     public void testImportTestFile() throws Exception {
-        Resource resource = resourceLoader.getResource("classpath:test.dfxp");
 
-        List<SubtitleItem> subtitleItemList = dfxpImportHandler.importFile(resource.getInputStream());
+        List<SubtitleItem> subtitleItemList = dfxpImportHandler.importFile(getFile("test.dfxp"));
         assertEquals(14, subtitleItemList.size());
     }
 }

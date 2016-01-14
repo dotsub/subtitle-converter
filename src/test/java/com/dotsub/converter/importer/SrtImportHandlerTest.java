@@ -1,12 +1,10 @@
 package com.dotsub.converter.importer;
 
-import com.dotsub.converter.SubtitleConverterApplicationTests;
+import com.dotsub.converter.SubtitleConverterTests;
 import com.dotsub.converter.exception.FileFormatException;
+import com.dotsub.converter.importer.impl.SrtImportHandler;
 import com.dotsub.converter.model.SubtitleItem;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 
 import java.util.List;
 
@@ -17,19 +15,13 @@ import static org.junit.Assert.*;
  * For: Dotsub LLC.
  * Date: 16-01-08.
  */
-public class SrtImportHandlerTest extends SubtitleConverterApplicationTests {
+public class SrtImportHandlerTest extends SubtitleConverterTests {
 
-    @Autowired
-    private SubtitleImportHandler srtImportHandler;
-
-    @Autowired
-    private ResourceLoader resourceLoader;
+    private SubtitleImportHandler srtImportHandler = new SrtImportHandler();
 
     @Test
     public void testImportTestFile() throws Exception {
-        Resource resource = resourceLoader.getResource("classpath:test.srt");
-
-        List<SubtitleItem> subtitleItemList = srtImportHandler.importFile(resource.getInputStream());
+        List<SubtitleItem> subtitleItemList = srtImportHandler.importFile(getFile("test.srt"));
         assertEquals(94, subtitleItemList.size());
 
         //mock item
@@ -43,8 +35,7 @@ public class SrtImportHandlerTest extends SubtitleConverterApplicationTests {
         assertNotNull(subtitleItem.hashCode());
         assertEquals(mockItem, subtitleItem);
 
-        resource = resourceLoader.getResource("classpath:test_pal.srt");
-        subtitleItemList = srtImportHandler.importFile(resource.getInputStream());
+        subtitleItemList = srtImportHandler.importFile(getFile("test_pal.srt"));
         assertEquals(94, subtitleItemList.size());
         //make sure the hours were properly dropped
         subtitleItemList.forEach(
@@ -54,10 +45,8 @@ public class SrtImportHandlerTest extends SubtitleConverterApplicationTests {
 
     @Test
     public void testImportFileWrongFormat() throws Exception {
-        Resource resource = resourceLoader.getResource("classpath:test.vtt");
-
         try {
-            srtImportHandler.importFile(resource.getInputStream());
+            srtImportHandler.importFile(getFile("test.vtt"));
         }
         catch (FileFormatException e) {
             //file format exception should be thrown since this is a vtt file

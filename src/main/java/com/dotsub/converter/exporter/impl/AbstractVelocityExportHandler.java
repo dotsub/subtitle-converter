@@ -3,10 +3,12 @@ package com.dotsub.converter.exporter.impl;
 import com.dotsub.converter.exporter.CaptionUtil;
 import com.dotsub.converter.exporter.SubtitleExportHandler;
 import com.dotsub.converter.model.SubtitleItem;
+import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.velocity.VelocityEngineUtils;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,8 +20,17 @@ import java.util.Map;
  */
 public abstract class AbstractVelocityExportHandler implements SubtitleExportHandler {
 
-    @Autowired
     protected VelocityEngine velocityEngine;
+
+    /**
+     * Creates a new instance with it's own velocityEngine.
+     */
+    public AbstractVelocityExportHandler() {
+        velocityEngine = new VelocityEngine();
+        velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+        velocityEngine.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+        velocityEngine.init();
+    }
 
     //can be overloaded so implementations can provide more context to their template.
     protected Map<String, Object> getAdditionalContext() {
@@ -31,12 +42,18 @@ public abstract class AbstractVelocityExportHandler implements SubtitleExportHan
     @Override
     public String exportSubtitles(List<SubtitleItem> subtitles) {
 
+        VelocityContext context = new VelocityContext();
         Map<String, Object> model = getAdditionalContext();
-        model.put("subtitles", subtitles);
+        //add the impl's extras
+        for (Map.Entry<String, Object> entry : model.entrySet()) {
+            context.put(entry.getKey(), entry.getValue());
+        }
+        context.put("subtitles", subtitles);
         //CaptionUtil has some helpful methods for rendering output
-        model.put("CaptionUtil", CaptionUtil.class);
+        context.put("CaptionUtil", CaptionUtil.class);
 
-        return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
-                getTemplateName(), "UTF-8", model);
+        StringWriter writer = new StringWriter();
+        velocityEngine.mergeTemplate(getTemplateName(), "UTF-8", context, writer);
+        return writer.toString();
     }
 }

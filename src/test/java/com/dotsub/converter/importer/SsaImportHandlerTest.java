@@ -1,12 +1,10 @@
 package com.dotsub.converter.importer;
 
-import com.dotsub.converter.SubtitleConverterApplicationTests;
+import com.dotsub.converter.SubtitleConverterTests;
 import com.dotsub.converter.exception.FileFormatException;
+import com.dotsub.converter.importer.impl.SsaImportHandler;
 import com.dotsub.converter.model.SubtitleItem;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 
 import java.util.List;
 
@@ -17,19 +15,14 @@ import static org.junit.Assert.*;
  * For: Dotsub LLC.
  * Date: 16-01-13.
  */
-public class SsaImportHandlerTest extends SubtitleConverterApplicationTests {
+public class SsaImportHandlerTest extends SubtitleConverterTests {
 
-    @Autowired
-    private SubtitleImportHandler ssaImportHandler;
-
-    @Autowired
-    private ResourceLoader resourceLoader;
+    private SubtitleImportHandler ssaImportHandler = new SsaImportHandler();
 
     @Test
     public void testImportTestFile() throws Exception {
-        Resource resource = resourceLoader.getResource("classpath:test.ssa");
 
-        List<SubtitleItem> subtitleItemList = ssaImportHandler.importFile(resource.getInputStream());
+        List<SubtitleItem> subtitleItemList = ssaImportHandler.importFile(getFile("test.ssa"));
         assertEquals(5, subtitleItemList.size());
 
         //mock item
@@ -66,9 +59,8 @@ public class SsaImportHandlerTest extends SubtitleConverterApplicationTests {
 
     @Test
     public void testImportFileWrongFormat() throws Exception {
-        Resource resource = resourceLoader.getResource("classpath:test.vtt");
         try {
-            ssaImportHandler.importFile(resource.getInputStream());
+            ssaImportHandler.importFile(getFile("test.vtt"));
         }
         catch (FileFormatException e) {
             //file format exception should be thrown since this is a vtt file

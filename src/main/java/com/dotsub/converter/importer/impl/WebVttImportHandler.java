@@ -6,7 +6,6 @@ import com.dotsub.converter.model.SubtitleItem;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,7 +23,6 @@ import static java.lang.String.format;
  * For: Dotsub LLC.
  * Date: 16-01-08.
  */
-@Component
 public class WebVttImportHandler implements SubtitleImportHandler {
 
     private static final Log log = LogFactory.getLog(WebVttImportHandler.class);
@@ -101,11 +99,9 @@ public class WebVttImportHandler implements SubtitleImportHandler {
             lineNumber++;
             //replace all non supported info
             String subtitleContent = caption.toString().replaceAll("<(.|\n)*?>", "");
-            if (log.isDebugEnabled()) {
-                log.debug(
-                        format("creating a new caption from: \t times:%d ms to %d ms  \t content: %s \t",
-                                start, duration, subtitleContent));
-            }
+            log.debug(
+                    format("creating a new caption from: \t times:%d ms to %d ms  \t content: %s \t",
+                            start, duration, subtitleContent));
             SubtitleItem item = new SubtitleItem(start, duration, subtitleContent);
             items.add(item);
         }

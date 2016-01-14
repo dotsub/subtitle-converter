@@ -8,7 +8,6 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
-import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ import java.util.regex.Pattern;
  * For: Dotsub LLC.
  * Date: 16-01-08.
  */
-@Component
 public class DfxpImportHandler implements SubtitleImportHandler {
 
     private static final Pattern pattern = Pattern.compile(".*(\\d+):(\\d+):(\\d+)[:\\.]{1}(\\d+)");

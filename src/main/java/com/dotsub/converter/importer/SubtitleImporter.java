@@ -2,16 +2,16 @@ package com.dotsub.converter.importer;
 
 import com.dotsub.converter.exception.FileFormatException;
 import com.dotsub.converter.exception.FileNotSupportedException;
+import com.dotsub.converter.importer.impl.*;
 import com.dotsub.converter.model.SubtitleItem;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,12 +19,24 @@ import java.util.List;
  * For: Dotsub LLC.
  * Date: 16-01-11.
  */
-@Service
 public class SubtitleImporter {
 
     private static final Log log = LogFactory.getLog(SubtitleImporter.class);
-    @Autowired
-    private List<SubtitleImportHandler> importHandlers;
+
+    private List<SubtitleImportHandler> importHandlers = new ArrayList<>();
+
+    /**
+     * Creates a new importer instance and adds the default parsers.
+     */
+    public SubtitleImporter() {
+        //TODO: Handle this via reflection?
+        importHandlers.add(new SrtImportHandler());
+        importHandlers.add(new StlImportHandler());
+        importHandlers.add(new DfxpImportHandler());
+        importHandlers.add(new SsaImportHandler());
+        importHandlers.add(new WebVttImportHandler());
+        importHandlers.add(new SbvImportHandler());
+    }
 
     /**
      * Iterates all importer implementations to find the one that can handle this file.

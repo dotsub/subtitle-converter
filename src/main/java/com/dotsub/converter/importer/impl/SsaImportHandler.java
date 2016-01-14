@@ -5,7 +5,6 @@ import com.dotsub.converter.exception.FileImportException;
 import com.dotsub.converter.importer.SubtitleImportHandler;
 import com.dotsub.converter.model.SubtitleItem;
 import org.apache.commons.io.IOUtils;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +20,6 @@ import java.util.regex.Pattern;
  * For: Dotsub LLC.
  * Date: 16-01-13.
  */
-@Component
 public class SsaImportHandler implements SubtitleImportHandler {
 
     private static final Pattern timePattern = Pattern.compile("(\\d+):(\\d+):(\\d+)\\.(\\d+)");

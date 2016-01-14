@@ -1,12 +1,10 @@
 package com.dotsub.converter.importer;
 
-import com.dotsub.converter.SubtitleConverterApplicationTests;
+import com.dotsub.converter.SubtitleConverterTests;
 import com.dotsub.converter.exception.FileFormatException;
+import com.dotsub.converter.importer.impl.WebVttImportHandler;
 import com.dotsub.converter.model.SubtitleItem;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 
 import java.util.List;
 
@@ -17,34 +15,24 @@ import static org.junit.Assert.*;
  * For: Dotsub LLC.
  * Date: 16-01-08.
  */
-public class WebVttImportHandlerTest extends SubtitleConverterApplicationTests {
+public class WebVttImportHandlerTest extends SubtitleConverterTests {
 
-    @Autowired
-    private SubtitleImportHandler webVttImportHandler;
-
-    @Autowired
-    private ResourceLoader resourceLoader;
+    private SubtitleImportHandler webVttImportHandler = new WebVttImportHandler();
 
     @Test
     public void testImportTestFile() throws Exception {
-        Resource resource = resourceLoader.getResource("classpath:test.vtt");
-
-        List<SubtitleItem> subtitleItemList = webVttImportHandler.importFile(resource.getInputStream());
+        List<SubtitleItem> subtitleItemList = webVttImportHandler.importFile(getFile("test.vtt"));
         assertEquals(21, subtitleItemList.size());
 
         //test file with no indexes
-        resource = resourceLoader.getResource("classpath:test_no_indexes.vtt");
-
-        subtitleItemList = webVttImportHandler.importFile(resource.getInputStream());
+        subtitleItemList = webVttImportHandler.importFile(getFile("test_no_indexes.vtt"));
         assertEquals(21, subtitleItemList.size());
     }
 
     @Test
     public void testImportFileWrongFormat() throws Exception {
-        Resource resource = resourceLoader.getResource("classpath:test.srt");
-
         try {
-            webVttImportHandler.importFile(resource.getInputStream());
+            webVttImportHandler.importFile(getFile("test.srt"));
         }
         catch (FileFormatException e) {
             //file format exception should be thrown since this is a vtt file

@@ -1,9 +1,9 @@
 package com.dotsub.converter.exporter;
 
-import com.dotsub.converter.SubtitleConverterApplicationTests;
+import com.dotsub.converter.SubtitleConverterTests;
+import com.dotsub.converter.exporter.impl.DfxpExportHandler;
 import com.dotsub.converter.model.SubtitleItem;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +15,9 @@ import static org.junit.Assert.*;
  * For: Dotsub LLC.
  * Date: 16-01-12.
  */
-public class DfxpExportHandlerTest extends SubtitleConverterApplicationTests {
+public class DfxpExportHandlerTest extends SubtitleConverterTests {
 
-    @Autowired
-    private SubtitleExportHandler dfxpExportHandler;
+    private SubtitleExportHandler dfxpExportHandler = new DfxpExportHandler();
 
     @Test
     public void testDfxpExport() throws Exception {

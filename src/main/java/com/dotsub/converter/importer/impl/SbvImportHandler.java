@@ -7,7 +7,6 @@ import com.dotsub.converter.model.SubtitleItem;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +24,6 @@ import static java.lang.String.format;
  * For: Dotsub LLC.
  * Date: 16-01-11.
  */
-@Component
 public class SbvImportHandler implements SubtitleImportHandler {
 
     private static final Log log = LogFactory.getLog(SbvImportHandler.class);
