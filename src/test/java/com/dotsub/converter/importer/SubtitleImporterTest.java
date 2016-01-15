@@ -20,7 +20,7 @@ public class SubtitleImporterTest extends SubtitleConverterTests {
 
     @Test
     public void testImportFormatIsDetected() throws Exception {
-        String[] files = {"test.sbv", "test.vtt", "test.srt", "test.dfxp"};
+        String[] files = {"test.sbv", "test.vtt", "test.srt", "test.dfxp", "test.qt", "test.stl"};
 
         for (String file : files) {
             try {

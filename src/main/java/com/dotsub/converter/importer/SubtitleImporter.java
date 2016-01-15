@@ -30,14 +30,18 @@ public class SubtitleImporter {
      */
     public SubtitleImporter() {
         //TODO: Handle this via reflection?
-        importHandlers.add(new SrtImportHandler());
-        importHandlers.add(new StlImportHandler());
-        importHandlers.add(new DfxpImportHandler());
-        importHandlers.add(new SsaImportHandler());
-        importHandlers.add(new WebVttImportHandler());
-        importHandlers.add(new SbvImportHandler());
+        this.addImportHandler(new QtTextImportHandler());
+        this.addImportHandler(new SrtImportHandler());
+        this.addImportHandler(new StlImportHandler());
+        this.addImportHandler(new DfxpImportHandler());
+        this.addImportHandler(new SsaImportHandler());
+        this.addImportHandler(new WebVttImportHandler());
+        this.addImportHandler(new SbvImportHandler());
     }
 
+    public void addImportHandler(SubtitleImportHandler importHandler) {
+        importHandlers.add(importHandler);
+    }
     /**
      * Iterates all importer implementations to find the one that can handle this file.
      * If not found it throws FileNotSupportedException
