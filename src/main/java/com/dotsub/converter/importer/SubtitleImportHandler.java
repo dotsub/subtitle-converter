@@ -1,5 +1,6 @@
 package com.dotsub.converter.importer;
 
+import com.dotsub.converter.model.Configuration;
 import com.dotsub.converter.model.SubtitleItem;
 
 import java.io.IOException;
@@ -15,6 +16,14 @@ public interface SubtitleImportHandler {
 
     String getFormatName();
 
-    List<SubtitleItem> importFile(InputStream inputStream) throws IOException;
+    /**
+     * Gets the apps default subtitle export configuration.
+     * @return A configuration object.
+     */
+    default Configuration getDefaultConfiguration() {
+        return new Configuration();
+    }
+
+    List<SubtitleItem> importFile(InputStream inputStream, Configuration configuration) throws IOException;
 
 }

@@ -2,6 +2,7 @@ package com.dotsub.converter.importer.impl;
 
 import com.dotsub.converter.exception.FileFormatException;
 import com.dotsub.converter.importer.SubtitleImportHandler;
+import com.dotsub.converter.model.Configuration;
 import com.dotsub.converter.model.SubtitleItem;
 import org.apache.commons.io.IOUtils;
 
@@ -36,7 +37,7 @@ public class QtTextImportHandler implements SubtitleImportHandler {
     }
 
     @Override
-    public List<SubtitleItem> importFile(InputStream inputStream) throws IOException {
+    public List<SubtitleItem> importFile(InputStream inputStream, Configuration configuration) throws IOException {
         Iterator lines = IOUtils.lineIterator(new InputStreamReader(inputStream, "UTF-8"));
         String firstLine = (String) lines.next();
         if (!firstLine.startsWith("{QTtext}")) {

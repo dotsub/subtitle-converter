@@ -2,6 +2,7 @@ package com.dotsub.converter.exporter;
 
 import com.dotsub.converter.SubtitleConverterTests;
 import com.dotsub.converter.exporter.impl.SbvExportHandler;
+import com.dotsub.converter.model.Configuration;
 import com.dotsub.converter.model.SubtitleItem;
 import org.junit.Test;
 
@@ -30,7 +31,7 @@ public class SbvExportHandlerTest extends SubtitleConverterTests {
 
         assertEquals("SubViewer", sbvExportHandler.getFormatName());
 
-        String srtFile = sbvExportHandler.exportSubtitles(subtitleItemList);
+        String srtFile = sbvExportHandler.exportSubtitles(subtitleItemList, new Configuration());
         assertNotNull(srtFile);
 
         String[] lines = srtFile.split("\n");

@@ -2,6 +2,7 @@ package com.dotsub.converter.importer;
 
 import com.dotsub.converter.SubtitleConverterTests;
 import com.dotsub.converter.importer.impl.DfxpImportHandler;
+import com.dotsub.converter.model.Configuration;
 import com.dotsub.converter.model.SubtitleItem;
 import org.junit.Test;
 
@@ -21,7 +22,7 @@ public class DfxpImportHandlerTest extends SubtitleConverterTests {
     @Test
     public void testImportTestFile() throws Exception {
 
-        List<SubtitleItem> subtitleItemList = dfxpImportHandler.importFile(getFile("test.dfxp"));
+        List<SubtitleItem> subtitleItemList = dfxpImportHandler.importFile(getFile("test.dfxp"), new Configuration());
         assertEquals(14, subtitleItemList.size());
     }
 }

@@ -2,6 +2,7 @@ package com.dotsub.converter.exporter;
 
 import com.dotsub.converter.SubtitleConverterTests;
 import com.dotsub.converter.exporter.impl.StlExportHandler;
+import com.dotsub.converter.model.Configuration;
 import com.dotsub.converter.model.SubtitleItem;
 import org.junit.Test;
 
@@ -21,7 +22,7 @@ public class StlExportHandlerTest extends SubtitleConverterTests {
     private SubtitleExportHandler stlExportHandler = new StlExportHandler();
 
     @Test
-    public void testSrtExport() throws Exception {
+    public void testStlExport() throws Exception {
         //create test items
         List<SubtitleItem> subtitleItemList = new ArrayList<>();
         subtitleItemList.add(new SubtitleItem(0, 1000, "test line 1"));
@@ -31,14 +32,14 @@ public class StlExportHandlerTest extends SubtitleConverterTests {
 
         assertEquals("Spruce Subtitle", stlExportHandler.getFormatName());
 
-        String srtFile = stlExportHandler.exportSubtitles(subtitleItemList);
+        String srtFile = stlExportHandler.exportSubtitles(subtitleItemList, new Configuration());
         assertNotNull(srtFile);
 
         String[] lines = srtFile.split("\n");
         //output should be
-        assertEquals(4, lines.length);
-        assertEquals("00:00:00:00 , 00:00:01:00 , test line 1", lines[0]);
-        assertEquals("00:00:01:00 , 00:00:02:00 , test line 2", lines[1]);
-        assertEquals("00:00:02:00 , 00:00:03:00 , test multi|line", lines[2]);
+        assertEquals(9, lines.length);
+        assertEquals("00:00:00:00 , 00:00:01:00 , test line 1", lines[5]);
+        assertEquals("00:00:01:00 , 00:00:02:00 , test line 2", lines[6]);
+        assertEquals("00:00:02:00 , 00:00:03:00 , test multi|line", lines[7]);
     }
 }

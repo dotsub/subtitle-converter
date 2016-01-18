@@ -1,5 +1,7 @@
 package com.dotsub.converter.exporter.impl;
 
+import com.dotsub.converter.model.Configuration;
+
 /**
  * Created by: Brooks Lyrette
  * For: Dotsub LLC.

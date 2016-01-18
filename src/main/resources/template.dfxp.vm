@@ -2,10 +2,7 @@
 xmlns:tts="http://www.w3.org/ns/ttml#styling">
   <head>
    <styling>
-      <style id="1" tts:textAlign="right"/>
-      <style id="2" tts:color="transparent"/>
-      <style id="3" tts:backgroundColor="transparent" tts:color="#FFCC00"/>
-      <style id="4" style="3" tts:fontSize="+2" tts:fontFamily="Arial"  tts:textAlign="center"/>
+      <style id="1" tts:backgroundColor="${CaptionUtil.formatColor($configuration.backgroundColor, $configuration.backgroundAlpha)}" tts:color="${CaptionUtil.formatColor($configuration.color)}" tts:fontSize="${configuration.fontSize}" tts:fontFamily="${configuration.font}"  tts:textAlign="${CaptionUtil.formatPositon($configuration.horizontalPosition)}"/>
    </styling>
   </head>
       <body>
@@ -13,7 +10,7 @@ xmlns:tts="http://www.w3.org/ns/ttml#styling">
 #foreach ($subtitle in $subtitles)
 #set( $startTime = $subtitle.startTime)
 #set( $stopTime = $subtitle.startTime + $subtitle.duration)
-            <p begin='${CaptionUtil.formatPeriod("dfxp", $startTime)}' end='${CaptionUtil.formatPeriod("dfxp", $stopTime)}' style="4">${CaptionUtil.formatLineSeperator("html", $CaptionUtil.escapeXml($subtitle.content))}</p>
+            <p begin='${CaptionUtil.formatPeriod("dfxp", $startTime)}' end='${CaptionUtil.formatPeriod("dfxp", $stopTime)}' style="1">${CaptionUtil.formatLineSeperator("html", $CaptionUtil.escapeXml($subtitle.content))}</p>
 #end
         </div>
      </body>

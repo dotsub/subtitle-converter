@@ -3,6 +3,7 @@ package com.dotsub.converter.importer;
 import com.dotsub.converter.exception.FileFormatException;
 import com.dotsub.converter.exception.FileNotSupportedException;
 import com.dotsub.converter.importer.impl.*;
+import com.dotsub.converter.model.Configuration;
 import com.dotsub.converter.model.SubtitleItem;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
@@ -42,6 +43,7 @@ public class SubtitleImporter {
     public void addImportHandler(SubtitleImportHandler importHandler) {
         importHandlers.add(importHandler);
     }
+
     /**
      * Iterates all importer implementations to find the one that can handle this file.
      * If not found it throws FileNotSupportedException
@@ -49,14 +51,15 @@ public class SubtitleImporter {
      * @return the SubtitleItems from the file
      * @throws IOException when there are issues reading the file.
      */
-    public List<SubtitleItem> importFile(InputStream inputStream) throws IOException {
+    public List<SubtitleItem> importFile(InputStream inputStream, Configuration configuration) throws IOException {
         //make a copy of the inputSteam since it can only be read once.
         byte[] fileContents = IOUtils.toByteArray(inputStream);
         //iterate all the know importers to determine which can import the file
         for (SubtitleImportHandler importHandler : importHandlers) {
             try {
                 log.info(String.format("Importing with %s", importHandler.getFormatName()));
-                List<SubtitleItem> subtitleItems = importHandler.importFile(new ByteArrayInputStream(fileContents));
+                List<SubtitleItem> subtitleItems = importHandler.importFile(
+                        new ByteArrayInputStream(fileContents), configuration);
                 log.info(String.format("File successfully imported. Format %s.", importHandler.getFormatName()));
                 return subtitleItems;
             }

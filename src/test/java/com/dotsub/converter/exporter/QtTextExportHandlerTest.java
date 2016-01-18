@@ -2,6 +2,7 @@ package com.dotsub.converter.exporter;
 
 import com.dotsub.converter.SubtitleConverterTests;
 import com.dotsub.converter.exporter.impl.QtTextExportHandler;
+import com.dotsub.converter.model.Configuration;
 import com.dotsub.converter.model.SubtitleItem;
 import org.junit.Test;
 
@@ -30,7 +31,7 @@ public class QtTextExportHandlerTest extends SubtitleConverterTests {
 
         assertEquals("QuickTime Text", qtTextImportHandler.getFormatName());
 
-        String srtFile = qtTextImportHandler.exportSubtitles(subtitleItemList);
+        String srtFile = qtTextImportHandler.exportSubtitles(subtitleItemList, new Configuration());
         assertNotNull(srtFile);
 
         String[] lines = srtFile.split("\n");

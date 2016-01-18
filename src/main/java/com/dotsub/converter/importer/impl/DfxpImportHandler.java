@@ -2,6 +2,7 @@ package com.dotsub.converter.importer.impl;
 
 import com.dotsub.converter.exception.FileFormatException;
 import com.dotsub.converter.importer.SubtitleImportHandler;
+import com.dotsub.converter.model.Configuration;
 import com.dotsub.converter.model.SubtitleItem;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -32,7 +33,7 @@ public class DfxpImportHandler implements SubtitleImportHandler {
     }
 
     @Override
-    public List<SubtitleItem> importFile(InputStream inputStream) {
+    public List<SubtitleItem> importFile(InputStream inputStream, Configuration configuration) {
         try {
             List<SubtitleItem> items = new ArrayList<>();
             SAXReader reader = new SAXReader();

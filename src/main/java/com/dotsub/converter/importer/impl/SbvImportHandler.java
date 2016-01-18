@@ -3,6 +3,7 @@ package com.dotsub.converter.importer.impl;
 import com.dotsub.converter.exception.FileFormatException;
 import com.dotsub.converter.exception.FileImportException;
 import com.dotsub.converter.importer.SubtitleImportHandler;
+import com.dotsub.converter.model.Configuration;
 import com.dotsub.converter.model.SubtitleItem;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
@@ -36,7 +37,7 @@ public class SbvImportHandler implements SubtitleImportHandler {
     }
 
     @Override
-    public List<SubtitleItem> importFile(InputStream inputStream) throws IOException {
+    public List<SubtitleItem> importFile(InputStream inputStream, Configuration configuration) throws IOException {
         Iterator lines = IOUtils.lineIterator(new InputStreamReader(inputStream, "UTF-8"));
         List<SubtitleItem> items = new ArrayList<>();
         int lineNumber = 0;
@@ -66,7 +67,7 @@ public class SbvImportHandler implements SubtitleImportHandler {
             end += Integer.parseInt(matcher.group(7)) * 1000;
             end += Integer.parseInt(matcher.group(8));
 
-            int durration = end - start;
+            int duration = end - start;
             String content;
             StringBuilder caption = new StringBuilder("");
             while (lines.hasNext() && (content = (String) lines.next()) != null && !content.equals("")) {
@@ -77,8 +78,8 @@ public class SbvImportHandler implements SubtitleImportHandler {
             }
             lineNumber++;
             log.debug(format("creating a new caption from: \t times:%d ms to %d ms  \t content: %s \t",
-                    start, durration, caption.toString()));
-            SubtitleItem item = new SubtitleItem(start, durration, caption.toString());
+                    start, duration, caption.toString()));
+            SubtitleItem item = new SubtitleItem(start, duration, caption.toString());
             items.add(item);
         }
         return items;

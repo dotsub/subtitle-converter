@@ -3,6 +3,7 @@ package com.dotsub.converter.importer;
 import com.dotsub.converter.SubtitleConverterTests;
 import com.dotsub.converter.exception.FileFormatException;
 import com.dotsub.converter.importer.impl.QtTextImportHandler;
+import com.dotsub.converter.model.Configuration;
 import com.dotsub.converter.model.SubtitleItem;
 import org.junit.Test;
 
@@ -21,7 +22,7 @@ public class QtTextImportHandlerTest extends SubtitleConverterTests {
 
     @Test
     public void testImportTestFile() throws Exception {
-        List<SubtitleItem> subtitleItemList = qtTextImportHandler.importFile(getFile("test.qt"));
+        List<SubtitleItem> subtitleItemList = qtTextImportHandler.importFile(getFile("test.qt"), new Configuration());
         assertEquals(21, subtitleItemList.size());
 
         //mock item
@@ -44,7 +45,7 @@ public class QtTextImportHandlerTest extends SubtitleConverterTests {
     @Test
     public void testImportFileWrongFormat() throws Exception {
         try {
-            qtTextImportHandler.importFile(getFile("test.vtt"));
+            qtTextImportHandler.importFile(getFile("test.vtt"), new Configuration());
         }
         catch (FileFormatException e) {
             //file format exception should be thrown since this is a vtt file

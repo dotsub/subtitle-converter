@@ -2,6 +2,7 @@ package com.dotsub.converter.importer;
 
 import com.dotsub.converter.SubtitleConverterTests;
 import com.dotsub.converter.exception.FileNotSupportedException;
+import com.dotsub.converter.model.Configuration;
 import com.dotsub.converter.model.SubtitleItem;
 import org.junit.Test;
 
@@ -24,7 +25,7 @@ public class SubtitleImporterTest extends SubtitleConverterTests {
 
         for (String file : files) {
             try {
-                List<SubtitleItem> subtitleItemList = subtitleImporter.importFile(getFile(file));
+                List<SubtitleItem> subtitleItemList = subtitleImporter.importFile(getFile(file), new Configuration());
                 assertNotNull(subtitleItemList);
                 assertTrue(subtitleItemList.size() > 1);
             }
@@ -38,7 +39,7 @@ public class SubtitleImporterTest extends SubtitleConverterTests {
     @Test
     public void testNotSubtitleFile() throws Exception {
         try {
-            subtitleImporter.importFile(getFile("test.txt"));
+            subtitleImporter.importFile(getFile("test.txt"), new Configuration());
             fail("This file should not be importable.");
         }
         catch (FileNotSupportedException e) {

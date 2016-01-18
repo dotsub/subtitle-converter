@@ -1,3 +1,9 @@
+#set ($d = "$")
+${d}FontName           = Arial
+${d}FontSize           = 36
+${d}HorzAlign          = Center
+${d}VertAlign          = Bottom
+
 #foreach ($subtitle in $subtitles)
 #set( $startTime = $subtitle.startTime)
 #set( $stopTime = $subtitle.startTime + $subtitle.duration)

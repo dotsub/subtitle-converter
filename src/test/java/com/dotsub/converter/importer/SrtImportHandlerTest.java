@@ -3,6 +3,7 @@ package com.dotsub.converter.importer;
 import com.dotsub.converter.SubtitleConverterTests;
 import com.dotsub.converter.exception.FileFormatException;
 import com.dotsub.converter.importer.impl.SrtImportHandler;
+import com.dotsub.converter.model.Configuration;
 import com.dotsub.converter.model.SubtitleItem;
 import org.junit.Test;
 
@@ -21,7 +22,7 @@ public class SrtImportHandlerTest extends SubtitleConverterTests {
 
     @Test
     public void testImportTestFile() throws Exception {
-        List<SubtitleItem> subtitleItemList = srtImportHandler.importFile(getFile("test.srt"));
+        List<SubtitleItem> subtitleItemList = srtImportHandler.importFile(getFile("test.srt"), new Configuration());
         assertEquals(94, subtitleItemList.size());
 
         //mock item
@@ -35,7 +36,7 @@ public class SrtImportHandlerTest extends SubtitleConverterTests {
         assertNotNull(subtitleItem.hashCode());
         assertEquals(mockItem, subtitleItem);
 
-        subtitleItemList = srtImportHandler.importFile(getFile("test_pal.srt"));
+        subtitleItemList = srtImportHandler.importFile(getFile("test_pal.srt"), new Configuration());
         assertEquals(94, subtitleItemList.size());
         //make sure the hours were properly dropped
         subtitleItemList.forEach(
@@ -46,7 +47,7 @@ public class SrtImportHandlerTest extends SubtitleConverterTests {
     @Test
     public void testImportFileWrongFormat() throws Exception {
         try {
-            srtImportHandler.importFile(getFile("test.vtt"));
+            srtImportHandler.importFile(getFile("test.vtt"), new Configuration());
         }
         catch (FileFormatException e) {
             //file format exception should be thrown since this is a vtt file

@@ -2,6 +2,7 @@ package com.dotsub.converter.exporter;
 
 import com.dotsub.converter.SubtitleConverterTests;
 import com.dotsub.converter.exporter.impl.WebVttExportHandler;
+import com.dotsub.converter.model.Configuration;
 import com.dotsub.converter.model.SubtitleItem;
 import org.junit.Test;
 
@@ -31,7 +32,7 @@ public class WebVttExportHandlerTest extends SubtitleConverterTests {
 
         assertEquals("WebVTT", webVttExportHandler.getFormatName());
 
-        String srtFile = webVttExportHandler.exportSubtitles(subtitleItemList);
+        String srtFile = webVttExportHandler.exportSubtitles(subtitleItemList, new Configuration());
         assertNotNull(srtFile);
 
         String[] lines = srtFile.split("\n");

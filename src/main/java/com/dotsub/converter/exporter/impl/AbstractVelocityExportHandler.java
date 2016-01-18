@@ -2,6 +2,7 @@ package com.dotsub.converter.exporter.impl;
 
 import com.dotsub.converter.exporter.CaptionUtil;
 import com.dotsub.converter.exporter.SubtitleExportHandler;
+import com.dotsub.converter.model.Configuration;
 import com.dotsub.converter.model.SubtitleItem;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -40,7 +41,7 @@ public abstract class AbstractVelocityExportHandler implements SubtitleExportHan
     protected abstract String getTemplateName();
 
     @Override
-    public String exportSubtitles(List<SubtitleItem> subtitles) {
+    public String exportSubtitles(List<SubtitleItem> subtitles, Configuration configuration) {
 
         VelocityContext context = new VelocityContext();
         Map<String, Object> model = getAdditionalContext();
@@ -49,6 +50,7 @@ public abstract class AbstractVelocityExportHandler implements SubtitleExportHan
             context.put(entry.getKey(), entry.getValue());
         }
         context.put("subtitles", subtitles);
+        context.put("configuration", configuration);
         //CaptionUtil has some helpful methods for rendering output
         context.put("CaptionUtil", CaptionUtil.class);
 

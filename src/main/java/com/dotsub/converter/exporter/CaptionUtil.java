@@ -1,5 +1,6 @@
 package com.dotsub.converter.exporter;
 
+import com.dotsub.converter.model.HorizontalPosition;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
@@ -98,4 +99,28 @@ public final class CaptionUtil {
         }
     }
 
+    public static String formatColor(int color) {
+        return String.format("#%06X", (0xFFFFFF & color));
+    }
+
+    public static String formatColor(int color, int alpha) {
+        return String.format("#%06X", (0xFFFFFF & color)) + String.format("%02X", (0xFF & alpha));
+    }
+
+    /**
+     * Gets a format specific string for HorizontalPosition.
+     * @param position the HorizontalPosition of the subtitles
+     * @return a string representation of that position.
+     */
+    public static String formatPosition(HorizontalPosition position) {
+        //text editor style formatting used in most cases
+        switch (position) {
+            case LEFT:
+                return "left";
+            case RIGHT:
+                return "right";
+            default:
+                return "center";
+        }
+    }
 }

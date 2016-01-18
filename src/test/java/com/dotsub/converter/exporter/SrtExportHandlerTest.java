@@ -2,6 +2,7 @@ package com.dotsub.converter.exporter;
 
 import com.dotsub.converter.SubtitleConverterTests;
 import com.dotsub.converter.exporter.impl.SrtExportHandler;
+import com.dotsub.converter.model.Configuration;
 import com.dotsub.converter.model.SubtitleItem;
 import org.junit.Test;
 
@@ -30,7 +31,7 @@ public class SrtExportHandlerTest extends SubtitleConverterTests {
 
         assertEquals("SubRip", srtExportHandler.getFormatName());
 
-        String srtFile = srtExportHandler.exportSubtitles(subtitleItemList);
+        String srtFile = srtExportHandler.exportSubtitles(subtitleItemList, new Configuration());
         assertNotNull(srtFile);
 
         String[] lines = srtFile.split("\n");

@@ -3,6 +3,7 @@ package com.dotsub.converter.importer.impl;
 import com.dotsub.converter.exception.FileFormatException;
 import com.dotsub.converter.exception.FileImportException;
 import com.dotsub.converter.importer.SubtitleImportHandler;
+import com.dotsub.converter.model.Configuration;
 import com.dotsub.converter.model.SubtitleItem;
 import org.apache.commons.io.IOUtils;
 
@@ -31,7 +32,23 @@ public class StlImportHandler implements SubtitleImportHandler {
     }
 
     @Override
-    public List<SubtitleItem> importFile(InputStream inputStream) throws IOException {
+    public Configuration getDefaultConfiguration() {
+        final Configuration configuration = new Configuration();
+        //default file frame-rate is 30 fps
+        configuration.setImportFps(30d);
+        return configuration;
+    }
+
+    @Override
+    public List<SubtitleItem> importFile(InputStream inputStream, Configuration configuration) throws IOException {
+        //read the config
+        double fps;
+        if (configuration.getImportFps() != null) {
+            fps = configuration.getImportFps();
+        }
+        else {
+            fps = getDefaultConfiguration().getImportFps();
+        }
         //The stl format is as follows
         //00:00:00:01 , 00:00:08:00 , Did you know?
         List<SubtitleItem> items = new ArrayList<SubtitleItem>();
@@ -65,8 +82,7 @@ public class StlImportHandler implements SubtitleImportHandler {
             start += Integer.parseInt(matcher.group(1)) * 3600000;
             start += Integer.parseInt(matcher.group(2)) * 60000;
             start += Integer.parseInt(matcher.group(3)) * 1000;
-            //last digit is frame number based on 30fps
-            int fps = 30;
+            //last digit is frame number based on input FPS
             int frame = Integer.parseInt(matcher.group(4));
             start += Math.floor(1000 / fps * frame);
 
@@ -74,7 +90,7 @@ public class StlImportHandler implements SubtitleImportHandler {
             end += Integer.parseInt(matcher.group(5)) * 3600000;
             end += Integer.parseInt(matcher.group(6)) * 60000;
             end += Integer.parseInt(matcher.group(7)) * 1000;
-            //last digit is frame number based on 30ps
+            //last digit is frame number based on input FPS
             frame = Integer.parseInt(matcher.group(4));
             end += Math.floor(1000 / fps * frame);
 

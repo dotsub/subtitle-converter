@@ -3,6 +3,7 @@ package com.dotsub.converter.importer;
 import com.dotsub.converter.SubtitleConverterTests;
 import com.dotsub.converter.exception.FileFormatException;
 import com.dotsub.converter.importer.impl.SsaImportHandler;
+import com.dotsub.converter.model.Configuration;
 import com.dotsub.converter.model.SubtitleItem;
 import org.junit.Test;
 
@@ -22,7 +23,7 @@ public class SsaImportHandlerTest extends SubtitleConverterTests {
     @Test
     public void testImportTestFile() throws Exception {
 
-        List<SubtitleItem> subtitleItemList = ssaImportHandler.importFile(getFile("test.ssa"));
+        List<SubtitleItem> subtitleItemList = ssaImportHandler.importFile(getFile("test.ssa"), new Configuration());
         assertEquals(5, subtitleItemList.size());
 
         //mock item
@@ -60,7 +61,7 @@ public class SsaImportHandlerTest extends SubtitleConverterTests {
     @Test
     public void testImportFileWrongFormat() throws Exception {
         try {
-            ssaImportHandler.importFile(getFile("test.vtt"));
+            ssaImportHandler.importFile(getFile("test.vtt"), new Configuration());
         }
         catch (FileFormatException e) {
             //file format exception should be thrown since this is a vtt file
