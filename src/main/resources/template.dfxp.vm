@@ -2,7 +2,7 @@
 xmlns:tts="http://www.w3.org/ns/ttml#styling">
   <head>
    <styling>
-      <style id="1" tts:backgroundColor="${CaptionUtil.formatColor($configuration.backgroundColor, $configuration.backgroundAlpha)}" tts:color="${CaptionUtil.formatColor($configuration.color)}" tts:fontSize="${configuration.fontSize}" tts:fontFamily="${configuration.font}"  tts:textAlign="${CaptionUtil.formatPositon($configuration.horizontalPosition)}"/>
+      <style id="1" tts:backgroundColor="${CaptionUtil.formatColor($configuration.backgroundColor, $configuration.backgroundAlpha)}" tts:color="${CaptionUtil.formatColor($configuration.color)}" tts:fontSize="${configuration.fontSize}" tts:fontFamily="${configuration.font}"  tts:textAlign="${CaptionUtil.formatPosition("text", $configuration.horizontalPosition)}"/>
    </styling>
   </head>
       <body>

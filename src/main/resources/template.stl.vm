@@ -1,8 +1,8 @@
 #set ($d = "$")
-${d}FontName           = Arial
-${d}FontSize           = 36
-${d}HorzAlign          = Center
-${d}VertAlign          = Bottom
+${d}FontName           = ${configuration.font}
+${d}FontSize           = ${configuration.fontSize}
+${d}HorzAlign          = ${CaptionUtil.formatPosition("stl", $configuration.horizontalPosition)}
+${d}VertAlign          = ${CaptionUtil.formatPosition("stl", $configuration.verticalPosition)}
 
 #foreach ($subtitle in $subtitles)
 #set( $startTime = $subtitle.startTime)

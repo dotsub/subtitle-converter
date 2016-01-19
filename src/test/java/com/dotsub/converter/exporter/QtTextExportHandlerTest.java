@@ -23,7 +23,7 @@ public class QtTextExportHandlerTest extends SubtitleConverterTests {
     private QtTextExportHandler qtTextImportHandler = new QtTextExportHandler();
 
     @Test
-    public void testSsaExport() throws Exception {
+    public void testQtExport() throws Exception {
         List<SubtitleItem> subtitleItemList = new ArrayList<>();
         subtitleItemList.add(new SubtitleItem(0, 1000, "test line 1"));
         subtitleItemList.add(new SubtitleItem(1000, 1000, "test line 2"));
@@ -31,10 +31,11 @@ public class QtTextExportHandlerTest extends SubtitleConverterTests {
 
         assertEquals("QuickTime Text", qtTextImportHandler.getFormatName());
 
-        String srtFile = qtTextImportHandler.exportSubtitles(subtitleItemList, new Configuration());
-        assertNotNull(srtFile);
+        String qtFile = qtTextImportHandler.exportSubtitles(subtitleItemList,
+                qtTextImportHandler.getDefaultConfiguration());
+        assertNotNull(qtFile);
 
-        String[] lines = srtFile.split("\n");
+        String[] lines = qtFile.split("\n");
         //output should be
         assertEquals(9, lines.length);
 
@@ -47,7 +48,10 @@ public class QtTextExportHandlerTest extends SubtitleConverterTests {
         assertEquals("test", lines[6]);
         assertEquals("multi line", lines[7]);
         assertEquals("[00:00:03.00]", lines[8]);
-    }
 
+        assertTrue(lines[0].contains("font:Arial"));
+        assertTrue(lines[0].contains("size:16"));
+        assertTrue(lines[0].contains("justify:center"));
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.dotsub.converter.exporter;
 
 import com.dotsub.converter.model.HorizontalPosition;
+import com.dotsub.converter.model.VerticalPosition;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
@@ -39,9 +40,10 @@ public final class CaptionUtil {
      * Formats a time in milliseconds to the desired caption format time-code.
      * @param format the format to be created.
      * @param periodInMills the time in milliseconds.
+     * @param fps the fps of the target format.
      * @return A string of the time in the selected format.
      */
-    public static String formatPeriod(String format, Integer periodInMills) {
+    public static String formatPeriod(String format, Integer periodInMills, Double fps) {
 
         Period period = new Period(periodInMills.intValue());
         DecimalFormat df = new DecimalFormat("00");
@@ -60,12 +62,22 @@ public final class CaptionUtil {
                 mills = getTwoDigitMills(period);
                 return ssaFormatter.print(period) + "." + df.format(mills);
             case "stl":
-                //last field is frames based on 30FPS
-                double frames = Math.round(30d * period.getMillis() / 1000d);
+                //last field is frames based on fps
+                double frames = Math.round(fps * period.getMillis() / 1000d);
                 return noMillsFormatter.print(period) + ":" + df.format(frames);
             default:
                 throw new RuntimeException(String.format("Unknown time format '%s'", format));
         }
+    }
+
+    /**
+     * Formats a time in milliseconds to the desired caption format time-code.
+     * @param format the format to be created.
+     * @param periodInMills the time in milliseconds.
+     * @return A string of the time in the selected format.
+     */
+    public static String formatPeriod(String format, Integer periodInMills) {
+        return formatPeriod(format, periodInMills, 30d);
     }
 
     private static double getTwoDigitMills(Period period) {
@@ -112,15 +124,62 @@ public final class CaptionUtil {
      * @param position the HorizontalPosition of the subtitles
      * @return a string representation of that position.
      */
-    public static String formatPosition(HorizontalPosition position) {
-        //text editor style formatting used in most cases
-        switch (position) {
-            case LEFT:
-                return "left";
-            case RIGHT:
-                return "right";
+    public static String formatPosition(String format, HorizontalPosition position) {
+        switch (format) {
+            //text editor style formatting used in most cases
+            case "text":
+                switch (position) {
+                    case LEFT:
+                        return "left";
+                    case RIGHT:
+                        return "right";
+                    default:
+                        return "center";
+                }
+            case "stl":
+                //stl style is upper-case
+                switch (position) {
+                    case LEFT:
+                        return "Left";
+                    case RIGHT:
+                        return "Right";
+                    default:
+                        return "Center";
+                }
             default:
-                return "center";
+                throw new RuntimeException(String.format("Unknown position format '%s'", format));
+        }
+    }
+
+    /**
+     * Gets a format specific string for HorizontalPosition.
+     * @param position the HorizontalPosition of the subtitles
+     * @return a string representation of that position.
+     */
+    public static String formatPosition(String format, VerticalPosition position) {
+        switch (format) {
+            //text editor style formatting used in most cases
+            case "text":
+                switch (position) {
+                    case TOP:
+                        return "top";
+                    case MIDDLE:
+                        return "middle";
+                    default:
+                        return "bottom";
+                }
+            case "stl":
+                //stl style is upper-case and uses middle not bottom
+                switch (position) {
+                    case TOP:
+                        return "Top";
+                    case MIDDLE:
+                        return "Center";
+                    default:
+                        return "Bottom";
+                }
+            default:
+                throw new RuntimeException(String.format("Unknown position format '%s'", format));
         }
     }
 }

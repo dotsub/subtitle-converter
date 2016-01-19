@@ -32,6 +32,9 @@ public interface SubtitleExportHandler {
         configuration.setBackgroundColor(0);
         configuration.setBackgroundAlpha(0);
         configuration.setColor(0xFFFFFF);
+        //default fps settings
+        configuration.setImportFps(30d);
+        configuration.setExportFps(30d);
 
         return configuration;
     }

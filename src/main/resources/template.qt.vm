@@ -1,4 +1,4 @@
-{QTtext}{timescale:1000}{font:${configuration.font}}{size:${configuration.fontSize}}{backColor:0,0,0}{textColor:65535,65535,65535}{width:420}{justify:${CaptionUtil.formatPositon($configuration.horizontalPosition)}}{dropShadow:on}{dropShadowOffset:1,1}{dropShadowTransparency:200}
+{QTtext}{timescale:1000}{font:${configuration.font}}{size:${configuration.fontSize}}{backColor:0,0,0}{textColor:65535,65535,65535}{width:420}{justify:${CaptionUtil.formatPosition("text", $configuration.horizontalPosition)}}{dropShadow:on}{dropShadowOffset:1,1}{dropShadowTransparency:200}
 #set( $lastFormattedStopTime = "00:00:00.00" )
 #foreach ($subtitle in $subtitles)
 #set( $startTime = $subtitle.startTime)
