@@ -38,6 +38,7 @@ public class SubtitleImporter {
         this.addImportHandler(new SsaImportHandler());
         this.addImportHandler(new WebVttImportHandler());
         this.addImportHandler(new SbvImportHandler());
+        this.addImportHandler(new SccImportHandler());
     }
 
     public void addImportHandler(SubtitleImportHandler importHandler) {
