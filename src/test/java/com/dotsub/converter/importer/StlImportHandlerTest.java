@@ -31,7 +31,7 @@ public class StlImportHandlerTest extends SubtitleConverterTests {
         assertEquals(21, subtitleItemList.size());
         //make sure the hours were properly dropped
         subtitleItemList.forEach(
-                item -> assertTrue(item.getStartTime() < 3600000)
+            item -> assertTrue(item.getStartTime() < 3600000)
         );
     }
 

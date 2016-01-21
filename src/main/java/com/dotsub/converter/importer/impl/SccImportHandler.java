@@ -21,7 +21,6 @@ import static java.lang.String.format;
 
 /**
  * Imports SCC captions from files with Channel 1 control codes.
- *
  * Created by: Brooks Lyrette
  * For: Dotsub LLC.
  * Date: 16-01-19.

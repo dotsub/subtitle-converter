@@ -1,5 +1,7 @@
 package com.dotsub.converter.model;
 
+import com.dotsub.converter.exporter.impl.scc.SccCaptionMode;
+
 /**
  * Created by: Brooks Lyrette
  * For: Dotsub LLC.
@@ -26,6 +28,11 @@ public class Configuration {
     private Integer backgroundColor = null;
     //0x00 to 0xFF
     private Integer backgroundAlpha = null;
+
+    //Options just for SCC
+    private Integer channel = 1;
+    private SccCaptionMode captionMode = SccCaptionMode.POP_ON;
+    private Boolean doubleControlCodes = true;
 
     public Configuration() {
     }
@@ -108,5 +115,25 @@ public class Configuration {
 
     public void setBackgroundAlpha(Integer backgroundAlpha) {
         this.backgroundAlpha = backgroundAlpha;
+    }
+
+    public Integer getChannel() {
+        return channel;
+    }
+
+    public void setChannel(Integer channel) {
+        this.channel = channel;
+    }
+
+    public SccCaptionMode getCaptionMode() {
+        return captionMode;
+    }
+
+    public void setCaptionMode(SccCaptionMode captionMode) {
+        this.captionMode = captionMode;
+    }
+
+    public Boolean getDoubleControlCodes() {
+        return doubleControlCodes;
     }
 }
