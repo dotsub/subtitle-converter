@@ -8,7 +8,9 @@ import com.dotsub.converter.model.SubtitleItem;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
+ * This code was converted from an older app where it was writing directly to a binary output stream.
  * Created by: Brooks Lyrette
  * For: Dotsub LLC.
  * Date: 16-01-20.
@@ -39,7 +41,7 @@ public class SccExportHandler implements SubtitleExportHandler {
     public String exportSubtitles(List<SubtitleItem> subtitles, Configuration configuration) {
 
         //parse the config
-        SccViewOptions viewOptions = new SccViewOptions(configuration);
+        SccConfiguration sccConfiguration = new SccConfiguration(configuration);
 
         StringBuilder sccCaptions = new StringBuilder();
 
@@ -50,92 +52,94 @@ public class SccExportHandler implements SubtitleExportHandler {
         for (SubtitleItem subtitle : subtitles) {
             //write close of last subtitle if this one starts after it ended
             if (lastEndTime != -1 && lastEndTime != subtitle.getStartTime()) {
-                clearScreen(sccCaptions, lastEndTime, viewOptions);
+                clearScreen(sccCaptions, lastEndTime, sccConfiguration);
             }
-            sccCaptions.append(getTimeCode(subtitle.getStartTime()));
+            //add the time code for this caption
+            sccCaptions.append(getTimeCode(subtitle.getStartTime(), sccConfiguration));
             sccCaptions.append("\t");
-            //start pop on caption
-            writeCaptions(sccCaptions, subtitle, viewOptions);
+            //start a new caption
+            writeCaptions(sccCaptions, subtitle, sccConfiguration);
             sccCaptions.append("\n\n");
             lastEndTime = (subtitle.getStartTime() + subtitle.getDuration());
             count++;
             if (count == subtitles.size()) {
-                clearScreen(sccCaptions, subtitle.getDuration() + subtitle.getStartTime(), viewOptions);
+                //if this is the last subtitle made sure to add a clear screen when it's duration is complete
+                clearScreen(sccCaptions, subtitle.getDuration() + subtitle.getStartTime(), sccConfiguration);
             }
         }
 
         return sccCaptions.toString();
     }
 
-    private void clearScreen(StringBuilder sccCaptions, Integer time, SccViewOptions viewOptions) {
-        sccCaptions.append(getTimeCode(time));
+    //clears the screen at a given time.
+    private void clearScreen(StringBuilder sccCaptions, Integer time, SccConfiguration sccConfiguration) {
+        sccCaptions.append(getTimeCode(time, sccConfiguration));
         sccCaptions.append("\t");
         List<Byte> bytes = new ArrayList<>();
-        addControlCode(bytes, viewOptions.getSccChannelControlCodes().clearScreen(), viewOptions);
-        writeCaptionToResponse(sccCaptions, bytes);
+        addControlCode(bytes, sccConfiguration.getSccChannelControlCodes().clearScreen(), sccConfiguration);
+        writeCaption(sccCaptions, bytes);
         sccCaptions.append("\n\n");
     }
 
-    private void writeCaptions(StringBuilder sccCaptions, SubtitleItem subtitle, SccViewOptions viewOptions) {
+    //takes the given config and adds the control codes for the correct subtitle type being shown
+    private void writeCaptions(StringBuilder sccCaptions, SubtitleItem subtitle, SccConfiguration sccConfiguration) {
         String content = subtitle.getContent();
         List<Byte> captionBytes;
-        SccCaptionMode mode = viewOptions.getMode();
+        SccCaptionMode mode = sccConfiguration.getMode();
         if (mode == SccCaptionMode.POP_ON) {
-            captionBytes = createPopOnCaption(content, viewOptions);
+            captionBytes = createPopOnCaption(content, sccConfiguration);
         }
         else if (mode == SccCaptionMode.ROLL_UP2
                 || mode == SccCaptionMode.ROLL_UP3 || mode == SccCaptionMode.ROLL_UP4) {
-            captionBytes = createRollUpCaption(content, viewOptions);
+            captionBytes = createRollUpCaption(content, sccConfiguration);
         }
         else {
             throw new IllegalArgumentException("Scc Mode not implemented");
         }
-        writeCaptionToResponse(sccCaptions, captionBytes);
+        writeCaption(sccCaptions, captionBytes);
     }
 
-    private List<Byte> createRollUpCaption(String content, SccViewOptions viewOptions) {
+    //Adds the control codes for a new 'roll up' subtitle
+    private List<Byte> createRollUpCaption(String content, SccConfiguration sccConfiguration) {
         List<Byte> captionBytes = new ArrayList<>();
-        SccCaptionMode mode = viewOptions.getMode();
-        SccChannelControlCodes sccChannelControlCodes = viewOptions.getSccChannelControlCodes();
+        SccCaptionMode mode = sccConfiguration.getMode();
+        SccChannelControlCodes sccChannelControlCodes = sccConfiguration.getSccChannelControlCodes();
         switch (mode) {
             case ROLL_UP2:
-                addControlCode(captionBytes, sccChannelControlCodes.startRollUpCaption2(), viewOptions);
+                addControlCode(captionBytes, sccChannelControlCodes.startRollUpCaption2(), sccConfiguration);
                 break;
             case ROLL_UP3:
-                addControlCode(captionBytes, sccChannelControlCodes.startRollUpCaption3(), viewOptions);
+                addControlCode(captionBytes, sccChannelControlCodes.startRollUpCaption3(), sccConfiguration);
                 break;
             case ROLL_UP4:
-                addControlCode(captionBytes, sccChannelControlCodes.startRollUpCaption4(), viewOptions);
+                addControlCode(captionBytes, sccChannelControlCodes.startRollUpCaption4(), sccConfiguration);
                 break;
             default:
-                //can't happen
+                //should not happen
         }
-        addControlCode(captionBytes, sccChannelControlCodes.carriageReturn(), viewOptions);
+        addControlCode(captionBytes, sccChannelControlCodes.carriageReturn(), sccConfiguration);
         //split into lines
-        String[] lines = parseLines(content);
+        String[] lines = content.split("\n");
         int currentLine = 15 - lines.length;
         for (String line : lines) {
             content = content.trim();
             int lineLength = line.length();
-            byte[] posBytes = getLinePosition(currentLine, lineLength, viewOptions);
-            addControlCode(captionBytes, posBytes, viewOptions);
+            byte[] posBytes = getLinePosition(currentLine, lineLength, sccConfiguration);
+            addControlCode(captionBytes, posBytes, sccConfiguration);
 
-            encodeSubtitleLine(captionBytes, line, viewOptions);
+            encodeSubtitleLine(captionBytes, line, sccConfiguration);
             if (currentLine < 14) {
-                addControlCode(captionBytes, sccChannelControlCodes.carriageReturn(), viewOptions);
+                addControlCode(captionBytes, sccChannelControlCodes.carriageReturn(), sccConfiguration);
             }
             currentLine++;
         }
         return captionBytes;
     }
 
-    private String[] parseLines(String content) {
-        return content.split("\n");
-    }
-
-    private byte[] getLinePosition(int currentLine, int lineLength, SccViewOptions viewOptions) {
-        int pos = 0;
-        switch (viewOptions.getConfiguration().getHorizontalPosition()) {
+    //Determine where on the line the cursor should start writing the subtitle.
+    private byte[] getLinePosition(int currentLine, int lineLength, SccConfiguration sccConfiguration) {
+        int pos;
+        switch (sccConfiguration.getConfiguration().getHorizontalPosition()) {
             case CENTER:
                 pos = (32 - lineLength) / 2;
                 break;
@@ -149,12 +153,13 @@ public class SccExportHandler implements SubtitleExportHandler {
         if (pos < 0) {
             pos = 0;
         }
-        return viewOptions.getSccChannelControlCodes().cursorToPosition(currentLine, pos);
+        return sccConfiguration.getSccChannelControlCodes().cursorToPosition(currentLine, pos);
     }
 
-    private void encodeSubtitleLine(List<Byte> captionBytes, String line, SccViewOptions viewOptions) {
+    //SCC captions are encoded in a text file as two byte pairs.
+    private void encodeSubtitleLine(List<Byte> captionBytes, String line, SccConfiguration sccConfiguration) {
         for (char c : line.toCharArray()) {
-            byte[] bytes = viewOptions.getEncodingProvider().encodeChar(c);
+            byte[] bytes = sccConfiguration.getSccEncodingProvider().encodeChar(c);
             if (bytes.length < 2) {
                 captionBytes.add(bytes[0]);
             } else {
@@ -174,26 +179,29 @@ public class SccExportHandler implements SubtitleExportHandler {
         }
     }
 
-    private List<Byte> createPopOnCaption(String content, SccViewOptions viewOptions) {
+    //Starts a new pop on caption
+    private List<Byte> createPopOnCaption(String content, SccConfiguration sccConfiguration) {
         List<Byte> captionBytes = new ArrayList<>();
-        addControlCode(captionBytes, viewOptions.getSccChannelControlCodes().startPopOnCaption(), viewOptions);
+        addControlCode(captionBytes,
+                sccConfiguration.getSccChannelControlCodes().startPopOnCaption(), sccConfiguration);
         //split into lines
-        String[] lines = parseLines(content);
+        String[] lines = content.split("\n");
         int currentLine = 15 - lines.length;
         for (String line : lines) {
             content = content.trim();
             int lineLength = line.length();
-            byte[] posBytes = getLinePosition(currentLine, lineLength, viewOptions);
-            addControlCode(captionBytes, posBytes, viewOptions);
-            encodeSubtitleLine(captionBytes, line, viewOptions);
+            byte[] posBytes = getLinePosition(currentLine, lineLength, sccConfiguration);
+            addControlCode(captionBytes, posBytes, sccConfiguration);
+            encodeSubtitleLine(captionBytes, line, sccConfiguration);
             currentLine++;
         }
-        addControlCode(captionBytes, viewOptions.getSccChannelControlCodes().clearScreen(), viewOptions);
-        addControlCode(captionBytes, viewOptions.getSccChannelControlCodes().endPopOnCaption(), viewOptions);
+        addControlCode(captionBytes, sccConfiguration.getSccChannelControlCodes().clearScreen(), sccConfiguration);
+        addControlCode(captionBytes, sccConfiguration.getSccChannelControlCodes().endPopOnCaption(), sccConfiguration);
         return captionBytes;
     }
 
-    private void writeCaptionToResponse(StringBuilder sccCaptions, List<Byte> captionBytes) {
+    //Writes the captions content
+    private void writeCaption(StringBuilder sccCaptions, List<Byte> captionBytes) {
         for (int i = 0; i < captionBytes.size(); i = i + 2) {
             sccCaptions.append(String.format("%02x%02x", captionBytes.get(i), captionBytes.get(i + 1)));
             if (captionBytes.size() > i + 2) {
@@ -202,8 +210,9 @@ public class SccExportHandler implements SubtitleExportHandler {
         }
     }
 
-    private void addControlCode(List<Byte> bytes, byte[] controlCode, SccViewOptions viewOptions) {
-        int code = (viewOptions.getIsDoubleControlCode() ? 2 : 1);
+    //Adds a control code, appending it twice if the config dictates.
+    private void addControlCode(List<Byte> bytes, byte[] controlCode, SccConfiguration sccConfiguration) {
+        int code = (sccConfiguration.getIsDoubleControlCode() ? 2 : 1);
         for (int i = 0; i < controlCode.length; i = i + 2) {
             for (int j = 0; j < code; j++) {
                 bytes.add(controlCode[i]);
@@ -212,9 +221,10 @@ public class SccExportHandler implements SubtitleExportHandler {
         }
     }
 
-    private String getTimeCode(Integer time) {
-
-        double fps = 29.97002997;
+    //The time code SCC uses is not wall-clock time. It's # of frames that have passed.
+    private String getTimeCode(Integer time, SccConfiguration sccConfiguration) {
+        //TODO: Add drop frame support.
+        double fps = sccConfiguration.getConfiguration().getExportFps();
         double frames = (time / 1000d) * fps;
 
         double hours;
@@ -230,6 +240,4 @@ public class SccExportHandler implements SubtitleExportHandler {
 
         return String.format("%02.0f:%02.0f:%02.0f:%02.0f", hours, minutes, seconds, frame);
     }
-
-
 }

@@ -40,7 +40,7 @@ public class SrtImportHandlerTest extends SubtitleConverterTests {
         assertEquals(94, subtitleItemList.size());
         //make sure the hours were properly dropped
         subtitleItemList.forEach(
-            item -> assertTrue(item.getStartTime() < 3600000)
+                item -> assertTrue(item.getStartTime() < 3600000)
         );
     }
 

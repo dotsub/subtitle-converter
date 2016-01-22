@@ -5,14 +5,16 @@ package com.dotsub.converter.exporter.impl.scc;
  * For: Dotsub LLC.
  * Date: 16-01-21.
  */
-public class SccChannel1Provider implements EncodingProvider {
+public class SccChannel1Provider implements SccEncodingProvider {
 
     protected byte specialCharsHighBit = (byte) 0x91;
     protected int frenchSpanishHighBit = 0x92;
     protected int germanDanishHighBit = 0x13;
 
     /**
-     * Creates a new instance of a SccChannel2 encoding provider.
+     * Creates a new instance of a SccChannel1 encoding provider.
+     * This is used to map a given character to it's value in a SCC file.
+     * It was not an exact match to any existing text encoding so I cooked this up.
      */
     public byte[] encodeChar(Character character) {
         switch (character) {
@@ -226,8 +228,6 @@ public class SccChannel1Provider implements EncodingProvider {
                 return new byte[]{specialCharsHighBit, (byte) 0x37};
             case 'à':
                 return new byte[]{specialCharsHighBit, (byte) 0x38};
-//            case ' ':
-//                return new byte[]{(byte) 0x11, (byte) 0x39};
             case 'è':
                 return new byte[]{specialCharsHighBit, (byte) 0xba};
             case 'â':

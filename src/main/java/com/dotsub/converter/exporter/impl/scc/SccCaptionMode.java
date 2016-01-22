@@ -6,8 +6,8 @@ package com.dotsub.converter.exporter.impl.scc;
  * Date: 16-01-21.
  */
 public enum  SccCaptionMode {
-    POP_ON,
-    ROLL_UP2,
-    ROLL_UP3,
-    ROLL_UP4
+    POP_ON, //captions that just pop on and off the screen.
+    ROLL_UP2, //roll up captions 2 lines
+    ROLL_UP3, //roll up captions 3 lines
+    ROLL_UP4  //roll up captions 4 lines
 }

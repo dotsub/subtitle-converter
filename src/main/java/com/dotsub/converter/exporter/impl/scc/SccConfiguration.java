@@ -7,22 +7,21 @@ import com.dotsub.converter.model.Configuration;
  * For: Dotsub LLC.
  * Date: 2016-01-21.
  */
-public class SccViewOptions {
+public class SccConfiguration {
 
-    protected EncodingProvider encodingProvider;
+    protected SccEncodingProvider sccEncodingProvider;
     protected SccChannelControlCodes sccChannelControlCodes;
-    protected SccCaptionMode mode = SccCaptionMode.POP_ON;
     protected Configuration configuration;
 
     /**
      * Creates a new SccView based on the selected configuration.
      * @param configuration the configuration set for this export.
      */
-    public SccViewOptions(Configuration configuration) {
+    public SccConfiguration(Configuration configuration) {
         this.configuration = configuration;
         //process the config to get the right encoder and control codes
         if (configuration.getChannel() == 1 || configuration.getChannel() == 3) {
-            encodingProvider = new SccChannel1Provider();
+            sccEncodingProvider = new SccChannel1Provider();
             if (configuration.getChannel() == 1) {
                 sccChannelControlCodes = new SccChannelControlCodes(SccChannelControlCodes.channel1);
             }
@@ -31,7 +30,7 @@ public class SccViewOptions {
             }
         }
         else if (configuration.getChannel() == 2 || configuration.getChannel() == 4) {
-            encodingProvider = new SccChannel2Provider();
+            sccEncodingProvider = new SccChannel2Provider();
             if (configuration.getChannel() == 2) {
                 sccChannelControlCodes = new SccChannelControlCodes(SccChannelControlCodes.channel2);
             }
@@ -44,8 +43,8 @@ public class SccViewOptions {
         }
     }
 
-    public EncodingProvider getEncodingProvider() {
-        return encodingProvider;
+    public SccEncodingProvider getSccEncodingProvider() {
+        return sccEncodingProvider;
     }
 
     public SccChannelControlCodes getSccChannelControlCodes() {
@@ -53,7 +52,7 @@ public class SccViewOptions {
     }
 
     public SccCaptionMode getMode() {
-        return mode;
+        return configuration.getCaptionMode();
     }
 
     public Boolean getIsDoubleControlCode() {

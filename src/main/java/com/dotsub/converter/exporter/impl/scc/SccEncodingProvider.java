@@ -5,7 +5,7 @@ package com.dotsub.converter.exporter.impl.scc;
  * For: Dotsub LLC.
  * Date: 16-01-21.
  */
-public interface EncodingProvider {
+public interface SccEncodingProvider {
 
     /**
      * Takes a given character and encoders it for SCC.
