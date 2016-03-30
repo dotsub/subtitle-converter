@@ -38,6 +38,7 @@ dependencies {
 	compile('joda-time:joda-time:2.0')
 	compile('org.apache.velocity:velocity:1.7')
 	compile("com.google.code.findbugs:annotations:3.0.0")
+	compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.3")
 	testCompile('junit:junit:4.12')
 }
 

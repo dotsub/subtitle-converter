@@ -29,6 +29,13 @@ public class SubtitleItem {
         }
     }
 
+    /**
+     * Default Constructor
+     */
+    public SubtitleItem() {
+
+    }
+
     public int getStartTime() {
         return startTime;
     }
