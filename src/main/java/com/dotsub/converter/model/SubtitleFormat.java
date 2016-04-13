@@ -8,10 +8,10 @@ package com.dotsub.converter.model;
 public enum SubtitleFormat {
     DFXP,
     SRT,
-    QT_TEXT,
+    QT,
     SBV,
     SCC,
     STL,
     SSA,
-    WEB_VTT
+    VTT
 }

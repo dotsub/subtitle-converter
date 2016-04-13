@@ -6,7 +6,6 @@ import com.dotsub.converter.model.SubtitleFormat;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
 /**
  * Created by: Francesco Benetti
@@ -24,8 +23,8 @@ public class SubtitleExportFactory {
 
         Map<SubtitleFormat, SubtitleExportHandler> exportHandlers = new HashMap<>();
         exportHandlers.put(SubtitleFormat.DFXP, new DfxpExportHandler());
-        exportHandlers.put(SubtitleFormat.WEB_VTT, new WebVttExportHandler());
-        exportHandlers.put(SubtitleFormat.QT_TEXT, new QtTextExportHandler());
+        exportHandlers.put(SubtitleFormat.VTT, new WebVttExportHandler());
+        exportHandlers.put(SubtitleFormat.QT, new QtTextExportHandler());
         exportHandlers.put(SubtitleFormat.SBV, new SbvExportHandler());
         exportHandlers.put(SubtitleFormat.SCC, new SccExportHandler());
         exportHandlers.put(SubtitleFormat.SRT, new SrtExportHandler());
