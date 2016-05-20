@@ -30,7 +30,7 @@ public class SubtitleItem {
     }
 
     /**
-     * Default Constructor
+     * Default Constructor.
      */
     public SubtitleItem() {
 

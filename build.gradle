@@ -1,9 +1,11 @@
 buildscript {
 	repositories {
 		mavenCentral()
+		jcenter()
 	}
 	dependencies {
         classpath("org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.4.0")
+		classpath 'eu.appsatori:gradle-fatjar-plugin:0.3'
 	}
 }
 
@@ -14,13 +16,12 @@ apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'eu.appsatori.fatjar'
 
 jar {
 	baseName = 'subtitle-converter'
 	version = '0.9.0-SNAPSHOT'
 }
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 repositories {
 	mavenCentral()
