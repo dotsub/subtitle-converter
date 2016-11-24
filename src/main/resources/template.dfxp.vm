@@ -1,12 +1,12 @@
-<tt xml:lang="$language" xmlns="http://www.w3.org/ns/ttml"
+<tt xml:lang='$language' xmlns="http://www.w3.org/ns/ttml"
 xmlns:tts="http://www.w3.org/ns/ttml#styling">
   <head>
    <styling>
-      <style id="1" tts:backgroundColor="${CaptionUtil.formatColor($configuration.backgroundColor, $configuration.backgroundAlpha)}" tts:color="${CaptionUtil.formatColor($configuration.color)}" tts:fontSize="${configuration.fontSize}" tts:fontFamily="${configuration.font}"  tts:textAlign="${CaptionUtil.formatPosition("text", $configuration.horizontalPosition)}"/>
+      <style id="1" tts:backgroundColor='${CaptionUtil.formatColor($configuration.backgroundColor, $configuration.backgroundAlpha)}' tts:color='${CaptionUtil.formatColor($configuration.color)}' tts:fontSize='${configuration.fontSize}' tts:fontFamily='${configuration.font}'  tts:textAlign='${CaptionUtil.formatPosition("text", $configuration.horizontalPosition)}'/>
    </styling>
   </head>
       <body>
-        <div xml:lang="$language">
+        <div xml:lang='$language'>
 #foreach ($subtitle in $subtitles)
 #set( $startTime = $subtitle.startTime)
 #set( $stopTime = $subtitle.startTime + $subtitle.duration)
